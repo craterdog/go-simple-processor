@@ -20,7 +20,7 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := TRUE`
  * `Ri := RANDOM`
  * `Ri := offset`
- * `Ri := literal` {two word instruction}
+ * `Ri := constant` {two word instruction}
  * `Ri := Rj`
 
 #### Comparision Operations
@@ -53,13 +53,13 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := C + Rj + Rk`
 
 #### Memory Access
- * `Ri := @(Rj)` {two word instruction}
+ * `Ri := @(Rj)`
  * `Ri := @(Rj + offset)` {two word instruction}
- * `Ri := @(Rj + Rk)` {two word instruction}
+ * `Ri := @(Rj + Rk)`
  * `Ri := @(Rj + offset + Rk)` {two word instruction}
- * `@(Ri) := Rj` {two word instruction}
+ * `@(Ri) := Rj`
  * `@(Ri + offset) := Rj` {two word instruction}
- * `@(Ri + Rk) := Rj` {two word instruction}
+ * `@(Ri + Rk) := Rj`
  * `@(Ri + offset + Rk) := Rj` {two word instruction}
 
 ### Getting Started
