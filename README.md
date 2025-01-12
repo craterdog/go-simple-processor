@@ -12,26 +12,27 @@ processor.  It also provides a Go based simulator for the processor.
  * `SKIP`
  * `JUMP offset`
  * `JUMP ON flags offset`
+ * `SETF flag boolean`
 
-#### Register Operations
+#### Assignment Operations
  * `Ri := 1`
  * `Ri := FALSE`
  * `Ri := TRUE`
  * `Ri := RANDOM`
- * `Ri := literal` {two word instruction}
  * `Ri := offset`
+ * `Ri := literal` {two word instruction}
  * `Ri := Rj`
- * `Ri := ~ Rj`
- * `Ri := - Rj`
- * `Ri := N > Rj`
- * `Ri := C > Rj`
- * `Ri := Rj < C`
+
+#### Comparision Operations
  * `Ri := Rj << Rk`
  * `Ri := Rj <= Rk`
  * `Ri := Rj == Rk`
  * `Ri := Rj >> Rk`
  * `Ri := Rj >= Rk`
  * `Ri := Rj <> Rk`
+
+#### Boolean Operations
+ * `Ri := NOT Rj`
  * `Ri := Rj AND Rk`
  * `Ri := Rj SAN Rk`
  * `Ri := Rj OR Rk`
@@ -40,12 +41,26 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := Rj NSAN Rk`
  * `Ri := Rj NOR Rk`
  * `Ri := Rj NXOR Rk`
- * `Ri := C + Rj + offset`
+
+#### Arithmentic Operations
+ * `Ri := 0 > Rj`
+ * `Ri := C > Rj`
+ * `Ri := N > Rj`
+ * `Ri := Rj < 0`
+ * `Ri := Rj < C`
+ * `Ri := -Rj`
+ * `Ri := Rj + offset`
  * `Ri := C + Rj + Rk`
 
 #### Memory Access
- * `Ri := @(Rj + Rk + offset)` {two word instruction}
- * `@(Ri + Rk + offset) := Rj` {two word instruction}
+ * `Ri := @(Rj)` {two word instruction}
+ * `Ri := @(Rj + offset)` {two word instruction}
+ * `Ri := @(Rj + Rk)` {two word instruction}
+ * `Ri := @(Rj + offset + Rk)` {two word instruction}
+ * `@(Ri) := Rj` {two word instruction}
+ * `@(Ri + offset) := Rj` {two word instruction}
+ * `@(Ri + Rk) := Rj` {two word instruction}
+ * `@(Ri + offset + Rk) := Rj` {two word instruction}
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
