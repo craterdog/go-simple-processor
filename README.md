@@ -35,7 +35,7 @@ processor.  It also provides a Go based simulator for the processor.
 #### Program Control
 `[00][op][fff][ooooooooo]`
  * `SKIP` {all zeros does nothing}
- * `JUMP BY fffooooooooo` {`fffooooooooo` in the range [-1024..1023]}
+ * `JUMP BY fffooooooooo` {`fffooooooooo` in the range [-2048..2047]}
  * `JUMP BY ooooooooo ON fff` {`ooooooooo` in the range [-256..255]}
  * `HALT`
  * `HALT ON fff`
