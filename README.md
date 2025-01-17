@@ -9,14 +9,17 @@ processor.  It also provides a Go based simulator for the processor.
 ### Architecture
 
 #### Flags
- * `Fi` {general purpose flags 1-4}
- * `FN` {negative}
- * `FZ` {zero}
- * `FC` {carry}
- * `FV` {overflow}
+ * `F1` {general purpose}
+ * `F2` {general purpose}
+ * `F3` {general purpose}
+ * `Fn` {negative}
+ * `Fz` {zero}
+ * `Fc` {carry}
+ * `Fv` {overflow}
+ * `Fi` {interrupt}
 
 #### Registers
- * `Ri` {general purpose registers 1-8}
+ * `Rn` {general purpose registers 1-8}
  * `PC` {program counter}
  * `IR` {instruction register}
  * `AR` {address register}
@@ -39,13 +42,13 @@ processor.  It also provides a Go based simulator for the processor.
 
 #### Assignment Operations
 `[01][00][opr][iii][jjj][kkk]`
- * `FLAGS := jjjkk` {flags are F1, F2, F3, F4, C}
+ * `FLAGS := Ri
  * `Ri := FLAGS`
  * `Ri := FALSE`
  * `Ri := TRUE`
  * `Ri := RANDOM`
  * `Ri := jjjkkk` {jjjkkk in the range [-32,,31]}
- * `Ri := constant` {is a two word instruction}
+ * `Ri := constant` {this is a two word instruction}
  * `Ri := Rj`
 
 #### Logical Operations
@@ -79,18 +82,16 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := Rj + Rk + C`
  * `Ri := Rj - Rk - C`
 
-#### Memory Access
-`[10][op][hhh][iii][jjj][kkk]`
- * `Ri := @(Rj)`
- * `Ri := @(Rj + hhhkkk)` {hhhkkk is in the range [-32..31]
- * `Ri := @(Rj + Rk)`
- * `Ri := @(Rj + hhhkkk + Rk)` {hhhkkk is in the range [-32..31]
-
-`[11][op][hhh][iii][jjj][kkk]`
- * `@(Rj) := Ri`
- * `@(Rj + hhhkkk) := Ri` {hhhkkk is in the range [-32..31]
- * `@(Rj + Rk) := Ri`
- * `@(Rj + hhhkkk + Rk) := Ri` {hhhkkk is in the range [-32..31]
+#### Access Memory
+`[10][rw][jok][iii][jjj][kkk]`
+ * `Ri <- @(Rj)`
+ * `Ri <- @(Rj + Rk)`
+ * `Ri <- @(Rj + offset)` {this is a two word instruction}
+ * `Ri <- @(Rj + offset + Rk)` {this is a two word instruction}
+ * `Ri -> @(Rj)`
+ * `Ri -> @(Rj + Rk)`
+ * `Ri -> @(Rj + offset)` {this is a two word instruction}
+ * `Ri -> @(Rj + offset + Rk)` {this is a two word instruction}
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
