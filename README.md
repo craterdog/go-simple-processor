@@ -35,19 +35,19 @@ processor.  It also provides a Go based simulator for the processor.
 #### Program Control
 `[00][op][fff][ooooooooo]`
  * `SKIP` {all zeros does nothing}
- * `JUMP BY fffooooooooo` {fffooooooooo in the range [-1024..1023]}
- * `JUMP BY ooooooooo ON fff` {ooooooooo in the range [-256..255]}
+ * `JUMP BY fffooooooooo` {`fffooooooooo` in the range [-1024..1023]}
+ * `JUMP BY ooooooooo ON fff` {`ooooooooo` in the range [-256..255]}
  * `HALT`
  * `HALT ON fff`
 
 #### Assignment Operations
 `[01][00][opr][iii][jjj][kkk]`
- * `FLAGS := Ri
- * `Ri := FLAGS`
+ * `FLAGS := Ri` {lower byte of `Ri` only}
+ * `Ri := FLAGS` {lower byte of `Ri` only}
  * `Ri := FALSE`
  * `Ri := TRUE`
  * `Ri := RANDOM`
- * `Ri := jjjkkk` {jjjkkk in the range [-32,,31]}
+ * `Ri := jjjkkk` {`jjjkkk` in the range [-32..31]}
  * `Ri := constant` {this is a two word instruction}
  * `Ri := Rj`
 
@@ -72,7 +72,7 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := Rj <= Rk`
 
 #### Arithmetic Operations
-`[01][11][opr][iii][jjj][kkk]` {kk is 0, 1, C, N; and k is C, V}
+`[01][11][opr][iii][jjj][kkk]` {`kk` is 0, 1, C, N; and `k` is C, V}
  * `Ri := kk -> Rj -> k`
  * `Ri := k <- Rj <- kk`
  * `Ri := !Rj`
