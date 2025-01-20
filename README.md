@@ -7,6 +7,10 @@ This project defines the design and instruction set for a simple 16 bit
 processor.  It also provides a Go based simulator for the processor.
 
 ### Architecture
+This simple processor architecture is made up of two major components—the
+Central Processing Unit (CPU) and the Memory Unit.
+
+![Architecture Model](https://raw.githubusercontent.com/wiki/craterdog/go-simple-processor/docs/images/Processor%20Architecture.jpg)
 
 #### Flags
  * `N` {negative}
