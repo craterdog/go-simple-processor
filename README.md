@@ -9,50 +9,58 @@ processor.  It also provides a Go based simulator for the processor.
 ### Architecture
 
 #### Flags
- * `F1` {general purpose}
- * `F2` {general purpose}
- * `F3` {general purpose}
- * `Fn` {negative}
- * `Fz` {zero}
- * `Fc` {carry}
- * `Fv` {overflow}
- * `Fi` {interrupt}
+ * `N` {negative}
+ * `Z` {zero}
+ * `C` {carry}
+ * `V` {overflow}
+ * `U` {general purpose}
+ * `I` {input available}
+ * `O` {output allowed}
+ * `S` {stopped}
 
 #### Registers
- * `Rn` {general purpose registers 1-8}
+ * `AR` {memory address register}
+ * `DR` {memory data register}
  * `PC` {program counter}
  * `IR` {instruction register}
- * `AR` {address register}
- * `DR` {data register}
+ * `Rn` {general purpose registers 1-8}
 
 #### Memory
  * 1 word = 16 bits
  * 64K addressable words {0x0000 - 0xFFFF}
- * address 0xFFFF is for I/O {readable and writable}
+ * address 0x0000 is for I/O {readable and writable}
+ * addresses 0x0001-0x0006 are the persistent, read-only boot ROM instructions
+ * addresses 0x0007-0xFFFF are the RAM
 
 ### Instruction Set
 
-#### Program Control
-`[00][op][fff][ooooooooo]`
+#### Branch Operations
+`[00][c][fff][oooooooooo]`
  * `SKIP` {all zeros does nothing}
- * `JUMP BY fffooooooooo` {`fffooooooooo` in the range [-2048..2047]}
- * `JUMP BY ooooooooo ON fff` {`ooooooooo` in the range [-256..255]}
+ * `JUMP BY fffoooooooooo` {`fffooooooooo` in the range [-4096..4095]}
+ * `JUMP BY oooooooooo ON fff` {`ooooooooo` in the range [-512..511]}
+
+#### Program Control
+`[01][opr][fff][00000000]`
+ * `CLEAR fff
+ * `SET fff
  * `HALT`
  * `HALT ON fff`
+ * `WAIT ON INPUT`
+ * `WAIT ON OUTPUT`
 
 #### Assignment Operations
-`[01][00][opr][iii][jjj][kkk]`
- * `FLAGS := Ri` {lower byte of `Ri` only}
- * `Ri := FLAGS` {lower byte of `Ri` only}
- * `Ri := FALSE`
- * `Ri := TRUE`
+`[10][00][opr][iii][jjj][kkk]`
+ * `Ri := FLAGS` {into the lower byte of `Ri`}
+ * `Ri := FALSE` {0x0000}
+ * `Ri := TRUE`  {0xFFFF}
  * `Ri := RANDOM`
  * `Ri := jjjkkk` {`jjjkkk` in the range [-32..31]}
  * `Ri := constant` {this is a two word instruction}
  * `Ri := Rj`
 
 #### Logical Operations
-`[01][01][opr][iii][jjj][kkk]`
+`[10][01][opr][iii][jjj][kkk]`
  * `Ri := Rj AND Rk`
  * `Ri := Rj SAN Rk`
  * `Ri := Rj IOR Rk`
@@ -63,7 +71,7 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := Rj NXOR Rk`
 
 #### Relational Operations
-`[01][10][opr][iii][jjj][kkk]`
+`[10][10][opr][iii][jjj][kkk]`
  * `Ri := Rj >> Rk`
  * `Ri := Rj == Rk`
  * `Ri := Rj >= Rk`
@@ -72,7 +80,7 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := Rj <= Rk`
 
 #### Arithmetic Operations
-`[01][11][opr][iii][jjj][kkk]` {`kk` is 0, 1, C, N; and `k` is C, V}
+`[10][11][opr][iii][jjj][kkk]` {`kk` is 0, 1, C, or N; and `k` is C, or V}
  * `Ri := kk -> Rj -> k`
  * `Ri := k <- Rj <- kk`
  * `Ri := !Rj`
@@ -83,7 +91,7 @@ processor.  It also provides a Go based simulator for the processor.
  * `Ri := Rj - Rk - C`
 
 #### Access Memory
-`[10][rw][jok][iii][jjj][kkk]`
+`[11][rw][jok][iii][jjj][kkk]`
  * `Ri <- @(Rj)`
  * `Ri <- @(Rj + Rk)`
  * `Ri <- @(Rj + offset)` {this is a two word instruction}
