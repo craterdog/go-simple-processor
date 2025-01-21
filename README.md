@@ -3,8 +3,21 @@
 ## Go Simple Processor Simulator
 
 ### Overview
-This project defines the design and instruction set for a simple 16 bit
-processor.  It also provides a Go based simulator for the processor.
+This project defines the design and instruction set for a simple 16 bit parallel
+processor whose purpose is to handle the processing of one slice of a data set.
+It also provides a Go based simulator for the processor.
+
+The typical use scenario for an instance of this processor is the following:
+ 1. A specific type of processing is required on some data.
+ 1. An available processor is chosen to handle this processing.
+ 1. The executable code for the program is added to a new input stream.
+ 1. The data to be processed is appended to the same stream.
+ 1. The `I` status flag of the processor is set to `1`.
+ 1. The processor reads into its memory from the input stream the program and
+    the associated data.
+ 1. The processor then executes the program, processes the data, and writes the
+    result to the output stream associated with the input stream.
+ 1. The program then resets the processor, and the flow goes back to step 1.
 
 ### Architecture
 This simple processor architecture is made up of two major components—the
