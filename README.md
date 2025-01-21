@@ -18,14 +18,14 @@ Central Processing Unit (CPU) and the Memory Unit.
 ![Architecture Model](https://raw.githubusercontent.com/wiki/craterdog/go-simple-processor/docs/images/Processor%20Architecture.jpg)
 
 #### Flags
+ * `1` {general purpose}
+ * `2` {general purpose}
+ * `3` {general purpose}
  * `N` {negative}
  * `Z` {zero}
  * `C` {carry}
  * `V` {overflow}
- * `U` {general purpose}
  * `I` {input available}
- * `O` {output allowed}
- * `S` {stopped}
 
 #### Registers
  * `AR` {memory address register}
@@ -38,8 +38,8 @@ Central Processing Unit (CPU) and the Memory Unit.
  * 1 word = 16 bits
  * 64K addressable words {0x0000 - 0xFFFF}
  * address 0x0000 is for I/O {readable and writable}
- * addresses 0x0001-0x0006 are the persistent, read-only boot ROM instructions
- * addresses 0x0007-0xFFFF are the RAM
+ * addresses 0x0001-0x0007 are the persistent, read-only boot ROM instructions
+ * addresses 0x0008-0xFFFF are the RAM
 
 ### Instruction Set
 
