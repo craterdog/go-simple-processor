@@ -81,10 +81,12 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri := Rj <> Rk`            | `1010101iiijjjkkk` |                                |
 | `Ri := Rj <= Rk`            | `1010110iiijjjkkk` |                                |
 | *Arithmetic Operation* | | |
-| `Ri := ll -> Rj -> r`       | `1011000iiijjjllr` |                                |
-| `Ri := l <- Rj <- rr`       | `1011001iiijjjlrr` |                                |
+| `Ri := ll -> Rj -> r`       | `1011000iiijjjllr` | `0, 1, C or V -> Rj -> C or V`.|
+| `Ri := l <- Rj <- rr`       | `1011001iiijjjlrr` | `C or V <- Rj <- 0, 1, C or V`.|
 | `Ri := !Rj`                 | `1011010iiijjj000` |                                |
+| `Ri := Rj -> offset`        | `1011010iiijjjooo` | The offset is [-4..3].         |
 | `Ri := -Rj`                 | `1011011iiijjj000` |                                |
+| `Ri := Rj <- offset`        | `1011011iiijjjooo` | The offset is [-4..3].         |
 | `Ri := Rj + offset`         | `1011100iiijjjooo` | The offset is [-4..3].         |
 | `Ri := Rj - offset`         | `1011101iiijjjooo` | The offset is [-4..3].         |
 | `Ri := Rj + Rk + C`         | `1011110iiijjjkkk` |                                |
