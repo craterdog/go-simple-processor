@@ -52,7 +52,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `CLEAR flag`                | `0100ff0000000000` | `ff` maps to `123C`.           |
 | `Set flag`                  | `0101ff0000000000` | `ff` maps to `123C`.           |
 | `BRANCH BY offset ON flag`  | `011fffoooooooooo` | The offset is [-512..511].     |
-| *Assignment Operations* | | |
+| *Assignment Operation* | | |
 | `Ri := FLAGS`               | `1000000iii000000` | `123CVNZI`                     |
 | `Ri := AR`                  | `1000000iii000001` |                                |
 | `Ri := DR`                  | `1000000iii000010` |                                |
@@ -64,7 +64,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri := RANDOM`              | `1000010iii000010` | A random number is generated.  |
 | `Ri := offset`              | `1000100iiioooooo` | The offset is [-32..31].       |
 | `Ri := constant`            | `1000110iii000000` | The constant is in next word.  |
-| *Logical Operations* | | |
+| *Logical Operation* | | |
 | `Ri := Rj AND Rk`           | `1001000iiijjjkkk` |                                |
 | `Ri := Rj SAN Rk`           | `1001001iiijjjkkk` |                                |
 | `Ri := Rj IOR Rk`           | `1001010iiijjjkkk` |                                |
@@ -73,14 +73,14 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri := Rj NSAN Rk`          | `1001101iiijjjkkk` |                                |
 | `Ri := Rj NIOR Rk`          | `1001110iiijjjkkk` |                                |
 | `Ri := Rj NXOR Rk`          | `1001111iiijjjkkk` |                                |
-| *Relational Operations* | | |
+| *Relational Operation* | | |
 | `Ri := Rj >> Rk`            | `1010001iiijjjkkk` |                                |
 | `Ri := Rj == Rk`            | `1010010iiijjjkkk` |                                |
 | `Ri := Rj >= Rk`            | `1010011iiijjjkkk` |                                |
 | `Ri := Rj << Rk`            | `1010100iiijjjkkk` |                                |
 | `Ri := Rj <> Rk`            | `1010101iiijjjkkk` |                                |
 | `Ri := Rj <= Rk`            | `1010110iiijjjkkk` |                                |
-| *Arithmetic Operations* | | |
+| *Arithmetic Operation* | | |
 | `Ri := ll -> Rj -> r`       | `1011000iiijjjllr` |                                |
 | `Ri := l <- Rj <- rr`       | `1011001iiijjjlrr` |                                |
 | `Ri := !Rj`                 | `1011010iiijjj000` |                                |
