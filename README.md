@@ -53,17 +53,17 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Set flag`                  | `0101ff0000000000` | `ff` maps to `123C`.           |
 | `BRANCH BY offset ON flag`  | `011fffoooooooooo` | The offset is [-512..511].     |
 | *Assignment Operation* | | |
-| `Ri := FLAGS`               | `1000000iii000000` | `123CVNZI`                     |
+| `Ri := FLAGS`               | `1000000iii000000` | The flags are `123CVNZI`.      |
 | `Ri := AR`                  | `1000000iii000001` |                                |
 | `Ri := DR`                  | `1000000iii000010` |                                |
 | `Ri := PC`                  | `1000000iii000011` |                                |
 | `Ri := IR`                  | `1000000iii000100` |                                |
 | `Ri := Rj`                  | `1000001iiijjj000` |                                |
-| `Ri := FALSE`               | `1000010iii000000` | `0x0000`                       |
-| `Ri := TRUE`                | `1000010iii000001` | `0xFFFF`                       |
+| `Ri := FALSE`               | `1000010iii000000` | The value of false is `0x0000`.|
+| `Ri := TRUE`                | `1000010iii000001` | The value of true is `0xFFFF`. |
 | `Ri := RANDOM`              | `1000010iii000010` | A random number is generated.  |
 | `Ri := offset`              | `1000100iiioooooo` | The offset is [-32..31].       |
-| `Ri := constant`            | `1000110iii000000` | The constant is in next word.  |
+| `Ri := constant`            | `1000110iii000000` | A constant is in the next word.|
 | *Logical Operation* | | |
 | `Ri := Rj AND Rk`           | `1001000iiijjjkkk` |                                |
 | `Ri := Rj SAN Rk`           | `1001001iiijjjkkk` |                                |
@@ -81,19 +81,19 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri := Rj <> Rk`            | `1010101iiijjjkkk` |                                |
 | `Ri := Rj <= Rk`            | `1010110iiijjjkkk` |                                |
 | *Arithmetic Operation* | | |
-| `Ri := 0 -> Rj -> C`        | `1011000iiijjj000` |                                |
-| `Ri := 1 -> Rj -> C`        | `1011000iiijjj001` |                                |
-| `Ri := C -> Rj -> C`        | `1011000iiijjj010` |                                |
-| `Ri := N -> Rj -> C`        | `1011000iiijjj011` | Allows for sign extension.     |
-| `Ri := C <- Rj <- 0`        | `1011000iiijjj100` |                                |
-| `Ri := C <- Rj <- 1`        | `1011000iiijjj101` |                                |
-| `Ri := C <- Rj <- C`        | `1011000iiijjj110` |                                |
-| `Ri := Rj -> offset`        | `1011001iiijjjooo` | The offset is [1..8].          |
-| `Ri := Rj <- offset`        | `1011010iiijjjooo` | The offset is [1..8].          |
-| `Ri := !Rj`                 | `1011011iiijjj000` |                                |
-| `Ri := -Rj`                 | `1011011iiijjj001` |                                |
-| `Ri := Rj + offset`         | `1011100iiijjjooo` | The offset is [-4..3].         |
-| `Ri := Rj - offset`         | `1011101iiijjjooo` | The offset is [-4..3].         |
+| `Ri := !Rj`                 | `1011000iiijjj000` |                                |
+| `Ri := -Rj`                 | `1011000iiijjj001` |                                |
+| `Ri := 0 -> Rj -> C, V`     | `1011001iiijjj000` |                                |
+| `Ri := 1 -> Rj -> C, V`     | `1011001iiijjj001` |                                |
+| `Ri := C -> Rj -> C, V`     | `1011001iiijjj010` |                                |
+| `Ri := N -> Rj -> C, V`     | `1011001iiijjj011` | Divide by 2 w/ sign extension. |
+| `Ri := C, V <- Rj <- 0`     | `1011001iiijjj100` | Multiply by 2.                 |
+| `Ri := C, V <- Rj <- 1`     | `1011001iiijjj101` |                                |
+| `Ri := C, V <- Rj <- C`     | `1011001iiijjj110` |                                |
+| `Ri := Rj -> offset`        | `1011010iiijjjooo` | The offset is [1..8].          |
+| `Ri := Rj <- offset`        | `1011011iiijjjooo` | The offset is [1..8].          |
+| `Ri := Rj + offset`         | `1011100iiijjjooo` | The offset is [1..8].          |
+| `Ri := Rj - offset`         | `1011101iiijjjooo` | The offset is [1..8].          |
 | `Ri := Rj + Rk + C`         | `1011110iiijjjkkk` |                                |
 | `Ri := Rj - Rk - C`         | `1011111iiijjjkkk` |                                |
 | *Memory Access* | | |
