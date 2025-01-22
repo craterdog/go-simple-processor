@@ -22,7 +22,7 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `2` {general purpose}
  * `3` {general purpose}
  * `C` {carry}
- * `V` {overflow}
+ * `V` {overflow = N XOR C}
  * `N` {negative}
  * `Z` {zero}
  * `I` {input available}
@@ -48,10 +48,12 @@ Central Processing Unit (CPU) and the Memory Unit.
 | *Unconditional Branch* | | |
 | `SKIP`                      | `0000000000000000` | This instruction does nothing. |
 | `JUMP BY offset`            | `00oooooooooooooo` | The offset is [-8192..8191].   |
+| | | |
 | *Conditional Branch* | | |
-| `CLEAR flag`                | `0100ff0000000000` | `ff` maps to `123C`.           |
-| `Set flag`                  | `0101ff0000000000` | `ff` maps to `123C`.           |
+| `CLEAR flag`                | `0100ff0000000000` | `ff` maps to flags `123C`.     |
+| `SET flag`                  | `0101ff0000000000` | `ff` maps to flags `123C`.     |
 | `BRANCH BY offset ON flag`  | `011fffoooooooooo` | The offset is [-512..511].     |
+| | | |
 | *Assignment Operation* | | |
 | `Ri := FLAGS`               | `1000000iii000000` | The flags are `123CVNZI`.      |
 | `Ri := AR`                  | `1000000iii000001` |                                |
@@ -64,15 +66,17 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri := RANDOM`              | `1000010iii000010` | A random number is generated.  |
 | `Ri := offset`              | `1000100iiioooooo` | The offset is [-32..31].       |
 | `Ri := constant`            | `1000110iii000000` | A constant is in the next word.|
+| | | |
 | *Logical Operation* | | |
 | `Ri := Rj AND Rk`           | `1001000iiijjjkkk` |                                |
-| `Ri := Rj SAN Rk`           | `1001001iiijjjkkk` |                                |
-| `Ri := Rj IOR Rk`           | `1001010iiijjjkkk` |                                |
-| `Ri := Rj XOR Rk`           | `1001011iiijjjkkk` |                                |
-| `Ri := Rj NAND Rk`          | `1001100iiijjjkkk` |                                |
-| `Ri := Rj NSAN Rk`          | `1001101iiijjjkkk` |                                |
-| `Ri := Rj NIOR Rk`          | `1001110iiijjjkkk` |                                |
+| `Ri := Rj NAND Rk`          | `1001001iiijjjkkk` |                                |
+| `Ri := Rj SAN Rk`           | `1001010iiijjjkkk` |                                |
+| `Ri := Rj NSAN Rk`          | `1001011iiijjjkkk` |                                |
+| `Ri := Rj IOR Rk`           | `1001100iiijjjkkk` |                                |
+| `Ri := Rj NIOR Rk`          | `1001101iiijjjkkk` |                                |
+| `Ri := Rj XOR Rk`           | `1001110iiijjjkkk` |                                |
 | `Ri := Rj NXOR Rk`          | `1001111iiijjjkkk` |                                |
+| | | |
 | *Relational Operation* | | |
 | `Ri := Rj >> Rk`            | `1010001iiijjjkkk` |                                |
 | `Ri := Rj == Rk`            | `1010010iiijjjkkk` |                                |
@@ -80,22 +84,25 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri := Rj << Rk`            | `1010100iiijjjkkk` |                                |
 | `Ri := Rj <> Rk`            | `1010101iiijjjkkk` |                                |
 | `Ri := Rj <= Rk`            | `1010110iiijjjkkk` |                                |
+| | | |
 | *Arithmetic Operation* | | |
-| `Ri := !Rj`                 | `1011000iiijjj000` |                                |
-| `Ri := -Rj`                 | `1011000iiijjj001` |                                |
-| `Ri := 0 -> Rj -> C, V`     | `1011001iiijjj000` |                                |
-| `Ri := 1 -> Rj -> C, V`     | `1011001iiijjj001` |                                |
-| `Ri := C -> Rj -> C, V`     | `1011001iiijjj010` |                                |
-| `Ri := N -> Rj -> C, V`     | `1011001iiijjj011` | Divide by 2 w/ sign extension. |
-| `Ri := C, V <- Rj <- 0`     | `1011001iiijjj100` | Multiply by 2.                 |
-| `Ri := C, V <- Rj <- 1`     | `1011001iiijjj101` |                                |
-| `Ri := C, V <- Rj <- C`     | `1011001iiijjj110` |                                |
-| `Ri := Rj -> offset`        | `1011010iiijjjooo` | The offset is [1..8].          |
-| `Ri := Rj <- offset`        | `1011011iiijjjooo` | The offset is [1..8].          |
-| `Ri := Rj + offset`         | `1011100iiijjjooo` | The offset is [1..8].          |
-| `Ri := Rj - offset`         | `1011101iiijjjooo` | The offset is [1..8].          |
+| `Ri := !Rj`                 | `1011000iiijjj000` | Take the one's complement.     |
+| `Ri := -Rj`                 | `1011000iiijjj001` | Take the two's complement.     |
+| `Ri := 0 > Rj`              | `1011001iiijjj000` |                                |
+| `Ri := Rj < 0`              | `1011001iiijjj001` | Multiply by 2.                 |
+| `Ri := 1 > Rj`              | `1011001iiijjj010` |                                |
+| `Ri := Rj < 1`              | `1011001iiijjj011` |                                |
+| `Ri := C > Rj`              | `1011001iiijjj100` |                                |
+| `Ri := Rj < C`              | `1011001iiijjj101` |                                |
+| `Ri := N > Rj`              | `1011001iiijjj110` | Divide by 2 w/ sign extension. |
+| `Ri := Rj < N`              | `1011001iiijjj111` |                                |
+| `Ri := Rj > offset`         | `1011010iiijjjooo` | The offset range is [1..8].    |
+| `Ri := Rj < offset`         | `1011011iiijjjooo` | The offset range is [1..8].    |
+| `Ri := Rj + offset`         | `1011100iiijjjooo` | The offset range is [1..8].    |
+| `Ri := Rj - offset`         | `1011101iiijjjooo` | The offset range is [1..8].    |
 | `Ri := Rj + Rk + C`         | `1011110iiijjjkkk` |                                |
 | `Ri := Rj - Rk - C`         | `1011111iiijjjkkk` |                                |
+| | | |
 | *Memory Access* | | |
 | `Ri <- @(Rj)`               | `1101100iiijjj000` |                                |
 | `Ri <- @(Rj + Rk)`          | `1101101iiijjjkkk` |                                |
