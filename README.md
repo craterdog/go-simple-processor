@@ -21,10 +21,10 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `1` {general purpose}
  * `2` {general purpose}
  * `3` {general purpose}
- * `N` {negative}
- * `Z` {zero}
  * `C` {carry}
  * `V` {overflow}
+ * `N` {negative}
+ * `Z` {zero}
  * `I` {input available}
 
 #### Registers
@@ -38,77 +38,66 @@ Central Processing Unit (CPU) and the Memory Unit.
  * 1 word = 16 bits
  * 64K addressable words {0x0000 - 0xFFFF}
  * address 0x0000 is for I/O {readable and writable}
- * addresses 0x0001-0x0007 are the persistent, read-only boot ROM instructions
- * addresses 0x0008-0xFFFF are the RAM
+ * addresses 0x0001-0x0007 are the persistent, read-only boot instructions
+ * addresses 0x0008-0xFFFF are random access memory (RAM)
 
 ### Instruction Set
 
-#### Branch Operations
-`[00][c][fff][oooooooooo]`
- * `SKIP` {all zeros does nothing}
- * `JUMP BY fffoooooooooo` {`fffooooooooo` in the range [-4096..4095]}
- * `JUMP BY oooooooooo ON fff` {`ooooooooo` in the range [-512..511]}
-
-#### Program Control
-`[01][opr][fff][00000000]`
- * `CLEAR fff
- * `SET fff
- * `HALT`
- * `HALT ON fff`
- * `WAIT ON INPUT`
- * `WAIT ON OUTPUT`
-
-#### Assignment Operations
-`[10][00][opr][iii][jjj][kkk]`
- * `Ri := FLAGS` {into the lower byte of `Ri`}
- * `Ri := FALSE` {0x0000}
- * `Ri := TRUE`  {0xFFFF}
- * `Ri := RANDOM`
- * `Ri := jjjkkk` {`jjjkkk` in the range [-32..31]}
- * `Ri := constant` {this is a two word instruction}
- * `Ri := Rj`
-
-#### Logical Operations
-`[10][01][opr][iii][jjj][kkk]`
- * `Ri := Rj AND Rk`
- * `Ri := Rj SAN Rk`
- * `Ri := Rj IOR Rk`
- * `Ri := Rj XOR Rk`
- * `Ri := Rj NAND Rk`
- * `Ri := Rj NSAN Rk`
- * `Ri := Rj NIOR Rk`
- * `Ri := Rj NXOR Rk`
-
-#### Relational Operations
-`[10][10][opr][iii][jjj][kkk]`
- * `Ri := Rj >> Rk`
- * `Ri := Rj == Rk`
- * `Ri := Rj >= Rk`
- * `Ri := Rj << Rk`
- * `Ri := Rj <> Rk`
- * `Ri := Rj <= Rk`
-
-#### Arithmetic Operations
-`[10][11][opr][iii][jjj][kkk]` {`kk` is 0, 1, C, or N; and `k` is C, or V}
- * `Ri := kk -> Rj -> k`
- * `Ri := k <- Rj <- kk`
- * `Ri := !Rj`
- * `Ri := -Rj`
- * `Ri := Rj + 1`
- * `Ri := Rj - 1`
- * `Ri := Rj + Rk + C`
- * `Ri := Rj - Rk - C`
-
-#### Access Memory
-`[11][rw][jok][iii][jjj][kkk]`
- * `Ri <- @(Rj)`
- * `Ri <- @(Rj + Rk)`
- * `Ri <- @(Rj + offset)` {this is a two word instruction}
- * `Ri <- @(Rj + offset + Rk)` {this is a two word instruction}
- * `Ri -> @(Rj)`
- * `Ri -> @(Rj + Rk)`
- * `Ri -> @(Rj + offset)` {this is a two word instruction}
- * `Ri -> @(Rj + offset + Rk)` {this is a two word instruction}
+| Mnemonic                | Instruction      | Notes                           |
+|-------------------------|------------------|---------------------------------|
+| *Unconditional Branch* | | |
+| SKIP                    | 0000000000000000 | This instruction does nothing.  |
+| JUMP BY offset          | 00oooooooooooooo | The offset is [-8192..8191].    |
+| *Conditional Branch* | | |
+| CLEAR flag              | 0100ff0000000000 | `ff` maps to 1, 2, 3 or C.      |
+| Set flag                | 0101ff0000000000 | `ff` maps to 1, 2, 3 or C.      |
+| BRANCH BY offset ON fff | 011fff0000000000 | `fff` maps to all 8 flags.      |
+| *Assignment Operations* | | |
+| Ri := FLAGS             | 1000000iii000000 | FLAGS & `0x00FF` -> Ri.         |
+| Ri := AR                | 1000000iii000001 | AR -> Ri.                       |
+| Ri := DR                | 1000000iii000010 | DR -> Ri.                       |
+| Ri := PC                | 1000000iii000011 | PC -> Ri.                       |
+| Ri := IR                | 1000000iii000100 | IR -> Ri.                       |
+| Ri := Rj                | 1000001iiijjj000 | Rj -> Ri.                       |
+| Ri := FALSE             | 1000010iii000000 | `0x0000` -> Ri.                 |
+| Ri := TRUE              | 1000010iii000001 | `0xFFFF` -> Ri.                 |
+| Ri := RANDOM            | 1000010iii000010 | A random word -> Ri.            |
+| Ri := offset            | 1000100iiioooooo | The offset is [-32..31].        |
+| Ri := constant          | 1000110iii000000 | The constant is in next word.   |
+| *Logical Operations* | | |
+| Ri := Rj AND Rk         | 1001000iiijjjkkk |                                 |
+| Ri := Rj SAN Rk         | 1001001iiijjjkkk |                                 |
+| Ri := Rj IOR Rk         | 1001010iiijjjkkk |                                 |
+| Ri := Rj XOR Rk         | 1001011iiijjjkkk |                                 |
+| Ri := Rj NAND Rk        | 1001100iiijjjkkk |                                 |
+| Ri := Rj NSAN Rk        | 1001101iiijjjkkk |                                 |
+| Ri := Rj NIOR Rk        | 1001110iiijjjkkk |                                 |
+| Ri := Rj NXOR Rk        | 1001111iiijjjkkk |                                 |
+| *Relational Operations* | | |
+| Ri := Rj >> Rk          | 1010001iiijjjkkk |                                 |
+| Ri := Rj == Rk          | 1010010iiijjjkkk |                                 |
+| Ri := Rj >= Rk          | 1010011iiijjjkkk |                                 |
+| Ri := Rj << Rk          | 1010100iiijjjkkk |                                 |
+| Ri := Rj <> Rk          | 1010101iiijjjkkk |                                 |
+| Ri := Rj <= Rk          | 1010110iiijjjkkk |                                 |
+| *Arithmetic Operations* | | |
+| Ri := ll -> Rj -> r     | 1011000iiijjjllr |                                 |
+| Ri := l <- Rj <- rr     | 1011001iiijjjlrr |                                 |
+| Ri := !Rj               | 1011010iiijjj000 |                                 |
+| Ri := -Rj               | 1011011iiijjj000 |                                 |
+| Ri := Rj + offset       | 1011100iiijjjooo | The offset is [-4..3].          |
+| Ri := Rj - offset       | 1011101iiijjjooo | The offset is [-4..3].          |
+| Ri := Rj + Rk + C       | 1011110iiijjjkkk |                                 |
+| Ri := Rj - Rk - C       | 1011111iiijjjkkk |                                 |
+| *Memory Access* | | |
+| Ri <- @(Rj)               | 1101100iiijjj000 |                               |
+| Ri <- @(Rj + Rk)          | 1101101iiijjjkkk |                               |
+| Ri <- @(Rj + offset)      | 1101110iiijjj000 | The offset is in next word.   |
+| Ri <- @(Rj + offset + Rk) | 1101111iiijjjkkk | The offset is in next word.   |
+| Ri -> @(Rj)               | 1110100iiijjj000 |                               |
+| Ri -> @(Rj + Rk)          | 1110101iiijjjkkk |                               |
+| Ri -> @(Rj + offset)      | 1110110iiijjj000 | The offset is in next word.   |
+| Ri -> @(Rj + offset + Rk) | 1110111iiijjjkkk | The offset is in next word.   |
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
