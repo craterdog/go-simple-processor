@@ -51,7 +51,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | *Conditional Branch* | | |
 | `CLEAR flag`                | `0100ff0000000000` | `ff` maps to `123C`.           |
 | `Set flag`                  | `0101ff0000000000` | `ff` maps to `123C`.           |
-| `BRANCH BY offset ON flag`  | `011fff0000000000` | `fff` maps to `123CVNZI`.      |
+| `BRANCH BY offset ON flag`  | `011fffoooooooooo` | The offset is [-512..511].     |
 | *Assignment Operations* | | |
 | `Ri := FLAGS`               | `1000000iii000000` | `123CVNZI`                     |
 | `Ri := AR`                  | `1000000iii000001` |                                |
