@@ -81,12 +81,17 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri := Rj <> Rk`            | `1010101iiijjjkkk` |                                |
 | `Ri := Rj <= Rk`            | `1010110iiijjjkkk` |                                |
 | *Arithmetic Operation* | | |
-| `Ri := ll -> Rj -> r`       | `1011000iiijjjllr` | `0, 1, C or V -> Rj -> C or V`.|
-| `Ri := l <- Rj <- rr`       | `1011001iiijjjlrr` | `C or V <- Rj <- 0, 1, C or V`.|
-| `Ri := !Rj`                 | `1011010iiijjj000` |                                |
-| `Ri := Rj -> offset`        | `1011010iiijjjooo` | The offset is [-4..3].         |
-| `Ri := -Rj`                 | `1011011iiijjj000` |                                |
-| `Ri := Rj <- offset`        | `1011011iiijjjooo` | The offset is [-4..3].         |
+| `Ri := 0 -> Rj -> C`        | `1011000iiijjj000` |                                |
+| `Ri := 1 -> Rj -> C`        | `1011000iiijjj001` |                                |
+| `Ri := C -> Rj -> C`        | `1011000iiijjj010` |                                |
+| `Ri := N -> Rj -> C`        | `1011000iiijjj011` | Allows for sign extension.     |
+| `Ri := C <- Rj <- 0`        | `1011000iiijjj100` |                                |
+| `Ri := C <- Rj <- 1`        | `1011000iiijjj101` |                                |
+| `Ri := C <- Rj <- C`        | `1011000iiijjj110` |                                |
+| `Ri := Rj -> offset`        | `1011001iiijjjooo` | The offset is [1..8].          |
+| `Ri := Rj <- offset`        | `1011010iiijjjooo` | The offset is [1..8].          |
+| `Ri := !Rj`                 | `1011011iiijjj000` |                                |
+| `Ri := -Rj`                 | `1011011iiijjj001` |                                |
 | `Ri := Rj + offset`         | `1011100iiijjjooo` | The offset is [-4..3].         |
 | `Ri := Rj - offset`         | `1011101iiijjjooo` | The offset is [-4..3].         |
 | `Ri := Rj + Rk + C`         | `1011110iiijjjkkk` |                                |
