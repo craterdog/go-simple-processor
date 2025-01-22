@@ -98,6 +98,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Ri -> @(Rj + Rk)`          | `1110101iiijjjkkk` |                                |
 | `Ri -> @(Rj + offset)`      | `1110110iiijjj000` | The offset is in next word.    |
 | `Ri -> @(Rj + offset + Rk)` | `1110111iiijjjkkk` | The offset is in next word.    |
+| `RESET`                     | `1111111111111111` | The processor, I/O and memory. |
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
