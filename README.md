@@ -45,7 +45,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 
 | Mnemonic                    | Instruction        | Notes                          |
 |-----------------------------|--------------------|--------------------------------|
-| *Unconditional Branch* | | |
+| *Unconditional Jump* | | |
 | `SKIP`                      | `0000000000000000` | This instruction does nothing. |
 | `JUMP BY offset`            | `00oooooooooooooo` | The offset is [-8192..8191].   |
 | | | |
