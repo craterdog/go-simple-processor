@@ -28,8 +28,6 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `I` {input available}
 
 #### Registers
- * `AR` {memory address register}
- * `DR` {memory data register}
  * `PC` {program counter}
  * `IR` {instruction register}
  * `Rn` {general purpose registers 1-8}
@@ -55,10 +53,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `BRANCH BY offset ON flag`  | `011fffoooooooooo` | The offset is [-512..511].     |
 | | | |
 | *Assignment Operation* | | |
-| `Ri := FLAGS`               | `1000000iii000000` | The flags are `123CVNZI`.      |
-| `Ri := AR`                  | `1000000iii000001` |                                |
-| `Ri := DR`                  | `1000000iii000010` |                                |
-| `Ri := PC`                  | `1000000iii000011` |                                |
+| `Ri := FLAGS`               | `1000000iii000001` | The flags are `123CVNZI`.      |
+| `Ri := PC`                  | `1000000iii000010` |                                |
 | `Ri := IR`                  | `1000000iii000100` |                                |
 | `Ri := Rj`                  | `1000001iiijjj000` |                                |
 | `Ri := FALSE`               | `1000010iii000000` | The value of false is `0x0000`.|
@@ -88,16 +84,16 @@ Central Processing Unit (CPU) and the Memory Unit.
 | *Arithmetic Operation* | | |
 | `Ri := !Rj`                 | `1011000iiijjj000` | Take the one's complement.     |
 | `Ri := -Rj`                 | `1011000iiijjj001` | Take the two's complement.     |
-| `Ri := 0 > Rj`              | `1011001iiijjj000` |                                |
-| `Ri := Rj < 0`              | `1011001iiijjj001` | Multiply by 2.                 |
-| `Ri := 1 > Rj`              | `1011001iiijjj010` |                                |
-| `Ri := Rj < 1`              | `1011001iiijjj011` |                                |
-| `Ri := C > Rj`              | `1011001iiijjj100` |                                |
-| `Ri := Rj < C`              | `1011001iiijjj101` |                                |
-| `Ri := N > Rj`              | `1011001iiijjj110` | Divide by 2 w/ sign extension. |
-| `Ri := Rj < N`              | `1011001iiijjj111` |                                |
-| `Ri := Rj > offset`         | `1011010iiijjjooo` | The offset range is [1..8].    |
-| `Ri := Rj < offset`         | `1011011iiijjjooo` | The offset range is [1..8].    |
+| `Ri := 0 -> Rj`             | `1011001iiijjj000` |                                |
+| `Ri := Rj <- 0`             | `1011001iiijjj001` | Multiply by 2.                 |
+| `Ri := 1 -> Rj`             | `1011001iiijjj010` |                                |
+| `Ri := Rj <- 1`             | `1011001iiijjj011` |                                |
+| `Ri := C -> Rj`             | `1011001iiijjj100` |                                |
+| `Ri := Rj <- C`             | `1011001iiijjj101` |                                |
+| `Ri := N -> Rj`             | `1011001iiijjj110` | Divide by 2 w/ sign extension. |
+| `Ri := Rj <- N`             | `1011001iiijjj111` |                                |
+| `Ri := Rj -> offset`        | `1011010iiijjjooo` | The offset range is [1..8].    |
+| `Ri := Rj <- offset`        | `1011011iiijjjooo` | The offset range is [1..8].    |
 | `Ri := Rj + offset`         | `1011100iiijjjooo` | The offset range is [1..8].    |
 | `Ri := Rj - offset`         | `1011101iiijjjooo` | The offset range is [1..8].    |
 | `Ri := Rj + Rk + C`         | `1011110iiijjjkkk` |                                |
