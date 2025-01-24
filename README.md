@@ -26,16 +26,16 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `FI` {input is available}
 
 #### Registers
+ * `Rn` {general purpose 1-8}
  * `PC` {program counter}
  * `IR` {instruction register}
- * `Rn` {general purpose 1-8}
 
 #### Memory
+ * 64K of addressable words {`0x0000` - `0xFFFF`}
  * 1 word = 16 bits
- * 64K addressable words {0x0000 - 0xFFFF}
- * address 0x0000 is for I/O {readable and writable}
- * addresses 0x0001-0x0007 are the persistent, read-only boot instructions
- * addresses 0x0008-0xFFFF are random access memory (RAM)
+ * Address `0x0000` is for I/O {readable and writable}
+ * Addresses `0x0001` - `0x0007` are the persistent, read-only boot instructions
+ * Addresses `0x0008` - `0xFFFF` are random access memory (RAM)
 
 ### Instruction Set
 
@@ -49,7 +49,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `SET Fn`                    | `0111nn**********` | `nn` maps to flags `[123C]`.   |
 | | | |
 | **Assignment Operations** | | |
-| `Rx := FLAGS`               | `1000000xxx***001` | The flags are `123CNZVI`.      |
+| `Rx := FLAGS`               | `1000000xxx***001` | The flags map to `0x00FF`.     |
 | `Rx := PC`                  | `1000000xxx***010` |                                |
 | `Rx := IR`                  | `1000000xxx***100` |                                |
 | `Rx := Ry`                  | `1000001xxxyyy***` |                                |
@@ -104,7 +104,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx -> @(Ry + Rz)`          | `1110101xxxyyyzzz` |                                |
 | `Rx -> @(Ry + offset)`      | `1110110xxxyyy***` | The offset is in the next word.|
 | `Rx -> @(Ry + offset + Rz)` | `1110111xxxyyyzzz` | The offset is in the next word.|
-| `RESET`                     | `1111************` | The processor, I/O and memory. |
+| `RESET`                     | `1111************` | Processor, I/O and memory.     |
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
