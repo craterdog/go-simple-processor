@@ -52,10 +52,10 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := FLAGS`               | `1000000xxx***001` | The flags are `123CNZVI`.      |
 | `Rx := PC`                  | `1000000xxx***010` |                                |
 | `Rx := IR`                  | `1000000xxx***100` |                                |
-| `Rx := Ry`                  | `1000001xxxyyy000` |                                |
-| `Rx := FALSE`               | `1000010xxx****00` | The value of false is `0x0000`.|
-| `Rx := TRUE`                | `1000010xxx****01` | The value of true is `0xFFFF`. |
-| `Rx := RANDOM`              | `1000010xxx****10` | A random number is generated.  |
+| `Rx := Ry`                  | `1000001xxxyyy***` |                                |
+| `Rx := FALSE`               | `1000010xxx***001` | The value of false is `0x0000`.|
+| `Rx := TRUE`                | `1000010xxx***010` | The value of true is `0xFFFF`. |
+| `Rx := RANDOM`              | `1000010xxx***100` | A random number is generated.  |
 | `Rx := offset`              | `1000100xxxoooooo` | The offset is `[-32..31]`.     |
 | `Rx := constant`            | `1000110xxx******` | A constant is in the next word.|
 | | | |
@@ -78,8 +78,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := Ry <= Rz`            | `1010110xxxyyyzzz` |                                |
 | | | |
 | **Arithmetic Operations** | | |
-| `Rx := NOT Ry`              | `1011000xxxyyy**0` | Take the one's complement.     |
-| `Rx := -Ry`                 | `1011000xxxyyy**1` | Take the two's complement.     |
+| `Rx := NOT Ry`              | `1011000xxxyyy*01` | Take the one's complement.     |
+| `Rx := -Ry`                 | `1011000xxxyyy*10` | Take the two's complement.     |
 | `Rx :=  0 -> Ry`            | `1011001xxxyyy000` |                                |
 | `Rx := Ry <- 0`             | `1011001xxxyyy001` | Multiply by 2.                 |
 | `Rx :=  1 -> Ry`            | `1011001xxxyyy010` |                                |
