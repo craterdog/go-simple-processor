@@ -22,7 +22,7 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `2` {general purpose}
  * `3` {general purpose}
  * `C` {carry}
- * `V` {overflow = N XOR C}
+ * `V` {overflow = `N XOR C`}
  * `N` {negative}
  * `Z` {zero}
  * `I` {input available}
