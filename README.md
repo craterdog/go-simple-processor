@@ -65,13 +65,13 @@ Central Processing Unit (CPU) and the Memory Unit.
 | | | |
 | **Logical Operation** | | |
 | `Rx := Ry AND Rz`           | `1001000xxxyyyzzz` |                                |
-| `Rx := Ry NAND Rz`          | `1001001xxxyyyzzz` |                                |
+| `Rx := NOT (Ry AND Rz)`     | `1001001xxxyyyzzz` |                                |
 | `Rx := Ry SAN Rz`           | `1001010xxxyyyzzz` |                                |
-| `Rx := Ry NSAN Rz`          | `1001011xxxyyyzzz` |                                |
+| `Rx := NOT (Ry SAN Rz)`     | `1001011xxxyyyzzz` |                                |
 | `Rx := Ry IOR Rz`           | `1001100xxxyyyzzz` |                                |
-| `Rx := Ry NIOR Rz`          | `1001101xxxyyyzzz` |                                |
+| `Rx := NOT (Ry IOR Rz)`     | `1001101xxxyyyzzz` |                                |
 | `Rx := Ry XOR Rz`           | `1001110xxxyyyzzz` |                                |
-| `Rx := Ry NXOR Rz`          | `1001111xxxyyyzzz` |                                |
+| `Rx := NOT (Ry NXOR Rz)`    | `1001111xxxyyyzzz` |                                |
 | | | |
 | **Relational Operation** | | |
 | `Rx := Ry >> Rz`            | `1010001xxxyyyzzz` |                                |
@@ -82,7 +82,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := Ry <= Rz`            | `1010110xxxyyyzzz` |                                |
 | | | |
 | **Arithmetic Operation** | | |
-| `Rx := !Ry`                 | `1011000xxxyyy000` | Take the one's complement.     |
+| `Rx := NOT Ry`              | `1011000xxxyyy000` | Take the one's complement.     |
 | `Rx := -Ry`                 | `1011000xxxyyy001` | Take the two's complement.     |
 | `Rx := 0 -> Ry`             | `1011001xxxyyy000` |                                |
 | `Rx := Ry <- 0`             | `1011001xxxyyy001` | Multiply by 2.                 |
