@@ -98,12 +98,12 @@ Central Processing Unit (CPU) and the Memory Unit.
 | **Memory Operations** | | |
 | `Rx <- @(Ry)`               | `1101100xxxyyy000` |                                |
 | `Rx <- @(Ry + Rz)`          | `1101101xxxyyyzzz` |                                |
-| `Rx <- @(Ry + offset)`      | `1101110xxxyyy000` | The offset is in next word.    |
-| `Rx <- @(Ry + offset + Rz)` | `1101111xxxyyyzzz` | The offset is in next word.    |
+| `Rx <- @(Ry + offset)`      | `1101110xxxyyy000` | The offset is in the next word.|
+| `Rx <- @(Ry + offset + Rz)` | `1101111xxxyyyzzz` | The offset is in the next word.|
 | `Rx -> @(Ry)`               | `1110100xxxyyy000` |                                |
 | `Rx -> @(Ry + Rz)`          | `1110101xxxyyyzzz` |                                |
-| `Rx -> @(Ry + offset)`      | `1110110xxxyyy000` | The offset is in next word.    |
-| `Rx -> @(Ry + offset + Rz)` | `1110111xxxyyyzzz` | The offset is in next word.    |
+| `Rx -> @(Ry + offset)`      | `1110110xxxyyy000` | The offset is in the next word.|
+| `Rx -> @(Ry + offset + Rz)` | `1110111xxxyyyzzz` | The offset is in the next word.|
 | `RESET`                     | `1111111111111111` | The processor, I/O and memory. |
 
 ### Getting Started
