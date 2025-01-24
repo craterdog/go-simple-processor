@@ -45,19 +45,19 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `SKIP`                      | `0000000000000000` | This instruction does nothing. |
 | `JUMP BY offset`            | `00oooooooooooooo` | The offset is `[-8192..8191]`. |
 | `JUMP BY offset ON Fn`      | `010nnnoooooooooo` | The offset is `[-512..511]`.   |
-| `CLEAR Fn`                  | `0110nn0000000000` | `nn` maps to flags `[123C]`.   |
-| `SET Fn`                    | `0111nn0000000000` | `nn` maps to flags `[123C]`.   |
+| `CLEAR Fn`                  | `0110nn**********` | `nn` maps to flags `[123C]`.   |
+| `SET Fn`                    | `0111nn**********` | `nn` maps to flags `[123C]`.   |
 | | | |
 | **Assignment Operations** | | |
-| `Rx := FLAGS`               | `1000000xxx000001` | The flags are `123CNZVI`.      |
-| `Rx := PC`                  | `1000000xxx000010` |                                |
-| `Rx := IR`                  | `1000000xxx000100` |                                |
+| `Rx := FLAGS`               | `1000000xxx***001` | The flags are `123CNZVI`.      |
+| `Rx := PC`                  | `1000000xxx***010` |                                |
+| `Rx := IR`                  | `1000000xxx***100` |                                |
 | `Rx := Ry`                  | `1000001xxxyyy000` |                                |
-| `Rx := FALSE`               | `1000010xxx000000` | The value of false is `0x0000`.|
-| `Rx := TRUE`                | `1000010xxx000001` | The value of true is `0xFFFF`. |
-| `Rx := RANDOM`              | `1000010xxx000010` | A random number is generated.  |
+| `Rx := FALSE`               | `1000010xxx****00` | The value of false is `0x0000`.|
+| `Rx := TRUE`                | `1000010xxx****01` | The value of true is `0xFFFF`. |
+| `Rx := RANDOM`              | `1000010xxx****10` | A random number is generated.  |
 | `Rx := offset`              | `1000100xxxoooooo` | The offset is `[-32..31]`.     |
-| `Rx := constant`            | `1000110xxx000000` | A constant is in the next word.|
+| `Rx := constant`            | `1000110xxx******` | A constant is in the next word.|
 | | | |
 | **Logical Operations** | | |
 | `Rx := Ry AND Rz`           | `1001000xxxyyyzzz` |                                |
@@ -78,8 +78,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := Ry <= Rz`            | `1010110xxxyyyzzz` |                                |
 | | | |
 | **Arithmetic Operations** | | |
-| `Rx := NOT Ry`              | `1011000xxxyyy000` | Take the one's complement.     |
-| `Rx := -Ry`                 | `1011000xxxyyy001` | Take the two's complement.     |
+| `Rx := NOT Ry`              | `1011000xxxyyy**0` | Take the one's complement.     |
+| `Rx := -Ry`                 | `1011000xxxyyy**1` | Take the two's complement.     |
 | `Rx :=  0 -> Ry`            | `1011001xxxyyy000` |                                |
 | `Rx := Ry <- 0`             | `1011001xxxyyy001` | Multiply by 2.                 |
 | `Rx :=  1 -> Ry`            | `1011001xxxyyy010` |                                |
@@ -96,15 +96,15 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := Ry - Rz - FC`        | `1011111xxxyyyzzz` |                                |
 | | | |
 | **Memory Operations** | | |
-| `Rx <- @(Ry)`               | `1101100xxxyyy000` |                                |
+| `Rx <- @(Ry)`               | `1101100xxxyyy***` |                                |
 | `Rx <- @(Ry + Rz)`          | `1101101xxxyyyzzz` |                                |
-| `Rx <- @(Ry + offset)`      | `1101110xxxyyy000` | The offset is in the next word.|
+| `Rx <- @(Ry + offset)`      | `1101110xxxyyy***` | The offset is in the next word.|
 | `Rx <- @(Ry + offset + Rz)` | `1101111xxxyyyzzz` | The offset is in the next word.|
-| `Rx -> @(Ry)`               | `1110100xxxyyy000` |                                |
+| `Rx -> @(Ry)`               | `1110100xxxyyy***` |                                |
 | `Rx -> @(Ry + Rz)`          | `1110101xxxyyyzzz` |                                |
-| `Rx -> @(Ry + offset)`      | `1110110xxxyyy000` | The offset is in the next word.|
+| `Rx -> @(Ry + offset)`      | `1110110xxxyyy***` | The offset is in the next word.|
 | `Rx -> @(Ry + offset + Rz)` | `1110111xxxyyyzzz` | The offset is in the next word.|
-| `RESET`                     | `1111111111111111` | The processor, I/O and memory. |
+| `RESET`                     | `1111************` | The processor, I/O and memory. |
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
