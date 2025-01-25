@@ -26,9 +26,9 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `FI` {input is available}
 
 #### Registers
- * `Rn` {general purpose 1-8}
- * `PC` {program counter}
- * `IR` {instruction register}
+ * `Rn` {general purpose 1-6}
+ * `IR` {instruction register = R0}
+ * `PC` {program counter = R7}
 
 #### Memory
  * 64K of addressable words {`0x0000` - `0xFFFF`}
@@ -43,64 +43,60 @@ Central Processing Unit (CPU) and the Memory Unit.
 |-----------------------------|--------------------|--------------------------------|
 | **Control Operations** | | |
 | `SKIP`                      | `0000000000000000` | This instruction does nothing. |
-| `JUMP BY offset`            | `00oooooooooooooo` | The offset is `[-8192..8191]`. |
-| `JUMP BY offset ON Fn`      | `010nnnoooooooooo` | The offset is `[-512..511]`.   |
-| `CLEAR Fn`                  | `0110nn**********` | `nn` maps to flags `[123C]`.   |
-| `SET Fn`                    | `0111nn**********` | `nn` maps to flags `[123C]`.   |
+| `JUMP BY offset`            | `000ooooooooooooo` | The offset is `[-4096..4095]`. |
+| `JUMP BY offset ON Fn`      | `001nnnoooooooooo` | The offset is `[-512..511]`.   |
 | | | |
 | **Assignment Operations** | | |
-| `Rx := FLAGS`               | `1000000xxx***001` | The flags map to `0x00FF`.     |
-| `Rx := PC`                  | `1000000xxx***010` |                                |
-| `Rx := IR`                  | `1000000xxx***100` |                                |
-| `Rx := Ry`                  | `1000001xxxyyy***` |                                |
-| `Rx := FALSE`               | `1000010xxx***001` | The value of false is `0x0000`.|
-| `Rx := TRUE`                | `1000010xxx***010` | The value of true is `0xFFFF`. |
-| `Rx := RANDOM`              | `1000010xxx***100` | A random number is generated.  |
-| `Rx := offset`              | `1000100xxxoooooo` | The offset is `[-32..31]`.     |
-| `Rx := constant`            | `1000110xxx******` | A constant is in the next word.|
+| `Fn := FALSE`               | `10000nn000000000` | `nn` maps to flags `[123C]`.   |
+| `Fn := TRUE`                | `10000nn000000111` | `nn` maps to flags `[123C]`.   |
+| `Rx := FLAGS`               | `1000000000000xxx` | The flags map to `0x00FF`.     |
+| `Rx := FALSE`               | `1000001000000xxx` | The value of false is `0x0000`.|
+| `Rx := TRUE`                | `1000010000000xxx` | The value of true is `0xFFFF`. |
+| `Rx := RANDOM`              | `1000011000000xxx` | A random number is generated.  |
+| `Rx := offset`              | `100010oooooooxxx` | The offset is `[-64..63]`.     |
+| `Rx := Ry`                  | `1000110000yyyxxx` | `Ry` includes `PC` and `IR`.   |
+| `Rx := constant`            | `1000111000000xxx` | A constant is in the next word.|
 | | | |
 | **Logical Operations** | | |
-| `Rx := Ry AND Rz`           | `1001000xxxyyyzzz` |                                |
-| `Rx := NOT (Ry AND Rz)`     | `1001001xxxyyyzzz` |                                |
-| `Rx := Ry SAN Rz`           | `1001010xxxyyyzzz` |                                |
-| `Rx := NOT (Ry SAN Rz)`     | `1001011xxxyyyzzz` |                                |
-| `Rx := Ry IOR Rz`           | `1001100xxxyyyzzz` |                                |
-| `Rx := NOT (Ry IOR Rz)`     | `1001101xxxyyyzzz` |                                |
-| `Rx := Ry XOR Rz`           | `1001110xxxyyyzzz` |                                |
-| `Rx := NOT (Ry NXOR Rz)`    | `1001111xxxyyyzzz` |                                |
+| `Rx := Ry AND Rz`           | `1001000zzzyyyxxx` |                                |
+| `Rx := NOT (Ry AND Rz)`     | `1001001zzzyyyxxx` |                                |
+| `Rx := Ry SAN Rz`           | `1001010zzzyyyxxx` |                                |
+| `Rx := NOT (Ry SAN Rz)`     | `1001011zzzyyyxxx` |                                |
+| `Rx := Ry IOR Rz`           | `1001100zzzyyyxxx` |                                |
+| `Rx := NOT (Ry IOR Rz)`     | `1001101zzzyyyxxx` |                                |
+| `Rx := Ry XOR Rz`           | `1001110zzzyyyxxx` |                                |
+| `Rx := NOT (Ry NXOR Rz)`    | `1001111zzzyyyxxx` |                                |
 | | | |
 | **Relational Operations** | | |
-| `Rx := Ry >> Rz`            | `1010001xxxyyyzzz` |                                |
-| `Rx := Ry == Rz`            | `1010010xxxyyyzzz` |                                |
-| `Rx := Ry >= Rz`            | `1010011xxxyyyzzz` |                                |
-| `Rx := Ry << Rz`            | `1010100xxxyyyzzz` |                                |
-| `Rx := Ry <> Rz`            | `1010101xxxyyyzzz` |                                |
-| `Rx := Ry <= Rz`            | `1010110xxxyyyzzz` |                                |
+| `Rx := Ry >> Rz`            | `1010001zzzyyyxxx` |                                |
+| `Rx := Ry == Rz`            | `1010010zzzyyyxxx` |                                |
+| `Rx := Ry >= Rz`            | `1010011zzzyyyxxx` |                                |
+| `Rx := Ry << Rz`            | `1010100zzzyyyxxx` |                                |
+| `Rx := Ry <> Rz`            | `1010101zzzyyyxxx` |                                |
+| `Rx := Ry <= Rz`            | `1010110zzzyyyxxx` |                                |
 | | | |
 | **Arithmetic Operations** | | |
-| `Rx := NOT Ry`              | `1011000xxxyyy*01` | Take the one's complement.     |
-| `Rx := -Ry`                 | `1011000xxxyyy*10` | Take the two's complement.     |
-| `Rx :=  0 -> Ry`            | `1011001xxxyyy000` |                                |
-| `Rx := Ry <- 0`             | `1011001xxxyyy001` | Multiply by 2.                 |
-| `Rx :=  1 -> Ry`            | `1011001xxxyyy010` |                                |
-| `Rx := Ry <- 1`             | `1011001xxxyyy011` |                                |
-| `Rx := FC -> Ry`            | `1011001xxxyyy100` |                                |
-| `Rx := Ry <- FC`            | `1011001xxxyyy101` |                                |
-| `Rx := FN -> Ry`            | `1011001xxxyyy110` | Divide by 2 w/ sign extension. |
-| `Rx := Ry <- FN`            | `1011001xxxyyy111` |                                |
-| `Rx := Ry -> offset`        | `1011010xxxyyyooo` | The offset range is `[1..8]`.  |
-| `Rx := Ry <- offset`        | `1011011xxxyyyooo` | The offset range is `[1..8]`.  |
-| `Rx := Ry + offset`         | `1011100xxxyyyooo` | The offset range is `[1..8]`.  |
-| `Rx := Ry - offset`         | `1011101xxxyyyooo` | The offset range is `[1..8]`.  |
-| `Rx := Ry + Rz + FC`        | `1011110xxxyyyzzz` |                                |
-| `Rx := Ry - Rz - FC`        | `1011111xxxyyyzzz` |                                |
+| `Rx := NOT Ry`              | `1011000000yyyxxx` | Take the one's complement.     |
+| `Rx := -Ry`                 | `1011000111yyyxxx` | Take the two's complement.     |
+| `Rx :=  0 -> Ry`            | `1011001000yyyxxx` |                                |
+| `Rx := Ry <- 0`             | `1011001111yyyxxx` | Multiply by 2.                 |
+| `Rx :=  1 -> Ry`            | `1011010000yyyxxx` |                                |
+| `Rx := Ry <- 1`             | `1011010111yyyxxx` |                                |
+| `Rx := FC -> Ry`            | `1011011000yyyxxx` |                                |
+| `Rx := Ry <- FC`            | `1011011111yyyxxx` |                                |
+| `Rx := FN -> Ry`            | `1011100000yyyxxx` | Divide by 2 w/ sign extension. |
+| `Rx := Ry <- FN`            | `1011100111yyyxxx` |                                |
+| `Rx := Ry + offset`         | `1011101oooyyyxxx` | The offset range is `[1..8]`.  |
+| `Rx := Ry - offset`         | `1011110oooyyyxxx` | The offset range is `[1..8]`.  |
+| `Rx := Ry + Rz + FC`        | `1011111zzzyyyxxx` |                                |
 | | | |
-| **I/O Operations** | | |
-| `Rx <- INPUT`               | `1101100xxx******` |                                |
-| `Rx <- @(Ry)`               | `1101110xxxyyy***` |                                |
-| `Rx -> OUTPUT`              | `1110100xxx******` |                                |
-| `Rx -> @(Ry)`               | `1110110xxxyyy***` |                                |
-| `RESET`                     | `1111************` | Processor, I/O and memory.     |
+| **Memory Operations** | | |
+| `Rx <- INPUT`               | `1100000000000xxx` |                                |
+| `Rx <- @(Ry)`               | `1101000000yyyxxx` |                                |
+| `Rx <- @(PC)`               | `1101000000111xxx` |                                |
+| `Rx -> OUTPUT`              | `1110000000000xxx` |                                |
+| `Rx -> @(Ry)`               | `1111000000yyyxxx` |                                |
+| `RESET`                     | `1111111111111111` | Processor, I/O and memory.     |
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
