@@ -49,8 +49,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | The offset is `[1..512]`.      |
 | | | |
 | **Flag Operations** | | |
-| `Fn := FALSE`               | `01000nn000000000` | `nn` maps to flags `[123C]`.   |
-| `Fn := TRUE`                | `01001nn000000000` | `nn` maps to flags `[123C]`.   |
+| `CLEAR Fn`                  | `01000nn000000000` | `nn` maps to flags `[123C]`.   |
+| `SET Fn`                    | `01001nn000000000` | `nn` maps to flags `[123C]`.   |
 | | | |
 | **Assignment Operations** | | |
 | `Rx := FLAGS`               | `1000000000000xxx` | The flags map to `0x00FF`.     |
