@@ -95,15 +95,11 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := Ry + Rz + FC`        | `1011110xxxyyyzzz` |                                |
 | `Rx := Ry - Rz - FC`        | `1011111xxxyyyzzz` |                                |
 | | | |
-| **Memory Operations** | | |
-| `Rx <- @(Ry)`               | `1101100xxxyyy***` |                                |
-| `Rx <- @(Ry + Rz)`          | `1101101xxxyyyzzz` |                                |
-| `Rx <- @(Ry + offset)`      | `1101110xxxyyy***` | The offset is in the next word.|
-| `Rx <- @(Ry + offset + Rz)` | `1101111xxxyyyzzz` | The offset is in the next word.|
-| `Rx -> @(Ry)`               | `1110100xxxyyy***` |                                |
-| `Rx -> @(Ry + Rz)`          | `1110101xxxyyyzzz` |                                |
-| `Rx -> @(Ry + offset)`      | `1110110xxxyyy***` | The offset is in the next word.|
-| `Rx -> @(Ry + offset + Rz)` | `1110111xxxyyyzzz` | The offset is in the next word.|
+| **I/O Operations** | | |
+| `Rx <- INPUT`               | `1101100xxx******` |                                |
+| `Rx <- @(Ry)`               | `1101110xxxyyy***` |                                |
+| `Rx -> OUTPUT`              | `1110100xxx******` |                                |
+| `Rx -> @(Ry)`               | `1110110xxxyyy***` |                                |
 | `RESET`                     | `1111************` | Processor, I/O and memory.     |
 
 ### Getting Started
