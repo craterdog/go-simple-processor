@@ -43,8 +43,10 @@ Central Processing Unit (CPU) and the Memory Unit.
 |-----------------------------|--------------------|--------------------------------|
 | **Control Operations** | | |
 | `SKIP`                      | `0000000000000000` | This instruction does nothing. |
-| `JUMP BY offset`            | `000ooooooooooooo` | The offset is `[-4096..4095]`. |
-| `JUMP BY offset ON Fn`      | `001nnnoooooooooo` | The offset is `[-512..511]`.   |
+| `JUMP BY offset`            | `0000oooooooooooo` | The offset is `[1..4096]`.     |
+| `JUMP BY -offset`           | `0001oooooooooooo` | The offset is `[1..4096]`.     |
+| `JUMP BY offset ON Fn`      | `0010nnnooooooooo` | The offset is `[1..512]`.      |
+| `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | The offset is `[1..512]`.      |
 | | | |
 | **Assignment Operations** | | |
 | `Fn := FALSE`               | `10000nn000000000` | `nn` maps to flags `[123C]`.   |
@@ -54,7 +56,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := TRUE`                | `1000001111111xxx` | The value of true is `0xFFFF`. |
 | `Rx := RANDOM`              | `1000010000000xxx` | A random number is generated.  |
 | `Rx := Ry`                  | `1000011000yyyxxx` | `Ry` includes `PC` and `IR`.   |
-| `Rx := constant`            | `10001ccccccccxxx` | The constant is `[-128..127]`. |
+| `Rx := constant`            | `100010cccccccxxx` | The constant is `[1..128]`.    |
+| `Rx := -constant`           | `100011cccccccxxx` | The constant is `[1..128]`.    |
 | | | |
 | **Logical Operations** | | |
 | `Rx := Ry AND Rz`           | `1001000zzzyyyxxx` |                                |
