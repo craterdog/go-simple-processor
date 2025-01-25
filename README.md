@@ -96,8 +96,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx <- INPUT`               | `1100000000000xxx` |                                |
 | `Rx <- @(Ry)`               | `1101000000yyyxxx` |                                |
 | `Rx <- @(PC)`               | `1101000000111xxx` |                                |
-| `Rx -> OUTPUT`              | `1110000000000xxx` |                                |
-| `Rx -> @(Ry)`               | `1111000000yyyxxx` |                                |
+| `Rz -> OUTPUT`              | `1110000zzz000000` |                                |
+| `Rz -> @(Ry)`               | `1111000zzzyyy000` |                                |
 | `RESET`                     | `1111111111111111` | Processor, I/O and memory.     |
 
 ### Getting Started
