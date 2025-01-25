@@ -48,14 +48,13 @@ Central Processing Unit (CPU) and the Memory Unit.
 | | | |
 | **Assignment Operations** | | |
 | `Fn := FALSE`               | `10000nn000000000` | `nn` maps to flags `[123C]`.   |
-| `Fn := TRUE`                | `10000nn000000111` | `nn` maps to flags `[123C]`.   |
+| `Fn := TRUE`                | `10000nn111111111` | `nn` maps to flags `[123C]`.   |
 | `Rx := FLAGS`               | `1000000000000xxx` | The flags map to `0x00FF`.     |
 | `Rx := FALSE`               | `1000001000000xxx` | The value of false is `0x0000`.|
-| `Rx := TRUE`                | `1000010000000xxx` | The value of true is `0xFFFF`. |
-| `Rx := RANDOM`              | `1000011000000xxx` | A random number is generated.  |
-| `Rx := offset`              | `100010oooooooxxx` | The offset is `[-64..63]`.     |
-| `Rx := Ry`                  | `1000110000yyyxxx` | `Ry` includes `PC` and `IR`.   |
-| `Rx := constant`            | `1000111000000xxx` | A constant is in the next word.|
+| `Rx := TRUE`                | `1000001111111xxx` | The value of true is `0xFFFF`. |
+| `Rx := RANDOM`              | `1000010000000xxx` | A random number is generated.  |
+| `Rx := Ry`                  | `1000011000yyyxxx` | `Ry` includes `PC` and `IR`.   |
+| `Rx := constant`            | `10001ccccccccxxx` | The constant is `[-128..127]`. |
 | | | |
 | **Logical Operations** | | |
 | `Rx := Ry AND Rz`           | `1001000zzzyyyxxx` |                                |
@@ -86,9 +85,9 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `Rx := Ry <- FC`            | `1011011111yyyxxx` |                                |
 | `Rx := FN -> Ry`            | `1011100000yyyxxx` | Divide by 2 w/ sign extension. |
 | `Rx := Ry <- FN`            | `1011100111yyyxxx` |                                |
-| `Rx := Ry + offset`         | `1011101oooyyyxxx` | The offset range is `[1..8]`.  |
-| `Rx := Ry - offset`         | `1011110oooyyyxxx` | The offset range is `[1..8]`.  |
-| `Rx := Ry + Rz + FC`        | `1011111zzzyyyxxx` |                                |
+| `Rx := Ry + Rz + FC`        | `1011101zzzyyyxxx` |                                |
+| `Rx := Ry + offset`         | `1011110oooyyyxxx` | The offset range is `[1..8]`.  |
+| `Rx := Ry - offset`         | `1011111oooyyyxxx` | The offset range is `[1..8]`.  |
 | | | |
 | **Memory Operations** | | |
 | `Rx <- INPUT`               | `1100000000000xxx` |                                |
