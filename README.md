@@ -93,8 +93,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 |                       | | |
 | **Memory Operations** | | |
 | `Rx <- INPUT`               | `11000********xxx` | Read `Rx` from input.          |
-| `Rx <- @(Ry)`               | `11010*****yyyxxx` | Load `Rx` from memory address. |
-| `Rx -> OUTPUT`              | `11100********xxx` | Write `Rx` to output.          |
+| `Rx -> OUTPUT`              | `11010********xxx` | Write `Rx` to output.          |
+| `Rx <- @(Ry)`               | `11100*****yyyxxx` | Load `Rx` from memory address. |
 | `Rx -> @(Ry)`               | `11110*****yyyxxx` | Store `Rx` in memory address.  |
 | `RESET`                     | `1111111111111111` | Reset CPU, I/O and memory.     |
 
