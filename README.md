@@ -55,7 +55,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `FLAGS := Rx`               | `01011***********` | Flags map to `0x00FF` in `Rx`. |
 |                           | | |
 | **Assignment Operations** | | |
-| `Rx := 0`                   | `1000000******xxx` | Reset the `Rx`.                |
+| `Rx := 0`                   | `1000000******xxx` | Reset `Rx`.                    |
 | `Rx := RANDOM`              | `1000001******xxx` | Put a random number in `Rx`.   |
 | `Rx := Ry`                  | `1000010***yyyxxx` | `Ry` includes `PC` and `IR`.   |
 | `Rx := Rx + offset`         | `10000110oooooxxx` | Increment `Rx` by `[1..32]`.   |
