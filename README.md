@@ -42,11 +42,11 @@ Central Processing Unit (CPU) and the Memory Unit.
 | Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
 | **Control Operations** | | |
-| `SKIP`                      | `0000000000000000` | Execute the next instruction.  |
-| `JUMP BY offset`            | `0000oooooooooooo` | Jump forward by `[1..4096]`.   |
-| `JUMP BY -offset`           | `0001oooooooooooo` | Jump backward by `[1..4096]`.  |
-| `JUMP BY offset ON Fn`      | `0010nnnooooooooo` | Jump forward `[1..512]` if Fn. |
-| `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Jump backward `[1..512]` if Fn.|
+| `SKIP`                      | `0000000000000000` | Forward by `1`.                |
+| `JUMP BY offset`            | `0000oooooooooooo` | Forward by `[1..4096]`.        |
+| `JUMP BY -offset`           | `0001oooooooooooo` | Backward by `[1..4096]`.       |
+| `JUMP BY offset ON Fn`      | `0010nnnooooooooo` | Forward by `[1..512]` if true. |
+| `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Backward by `[1..512]` if true.|
 |                     | | |
 | **Flag Operations** | | |
 | `CLEAR Fn`                  | `01000nn*********` | Set flag `F[123C]` to false.   |
