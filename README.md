@@ -38,6 +38,13 @@ Central Processing Unit (CPU) and the Memory Unit.
  * Addresses `0x0008` - `0xFFFF` are random access memory (RAM)
 
 ### Instruction Set
+The instruction set for this processor consists of 42 (obviously!) instructions
+and one pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1`
+instruction (the traditional "noop" instruction).  The `Rx` register cannot be
+the `PC` or `IR` registers to ensure the integrity of the processor.  The `Ry`
+and `Rz` registers may be any of the eight registers.  Similarly, only the `F1`,
+`F2`, `F3`, and `FC` flags may be set or cleared, again to ensure the
+integrity of the processor.
 
 | Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
@@ -52,7 +59,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `CLEAR Fn`                  | `01000nn*********` | Set flag `F[123C]` to false.   |
 | `SET Fn`                    | `01001nn*********` | Set flag `F[123C]` to true.    |
 | `Rx := FLAGS`               | `01010********xxx` | Flags map to `0x00FF` in `Rx`. |
-| `FLAGS := Rx`               | `01011***********` | Flags map to `0x00FF` in `Rx`. |
+| `FLAGS := Rx`               | `01011***********` | Flags map to `0x00F0` in `Rx`. |
 |                           | | |
 | **Assignment Operations** | | |
 | `Rx := 0`                   | `1000000******xxx` | Reset `Rx`.                    |
