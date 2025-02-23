@@ -49,11 +49,11 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | The offset is `[1..512]`.      |
 |                     | | |
 | **Flag Operations** | | |
-| `CLEAR Fn`                  | `010nnnn*********` | `nnnn` maps to flags `[123C]`. |
-| `SET Fn`                    | `011nnnn*********` | `nnnn` maps to flags `[123C]`. |
+| `CLEAR Fn`                  | `01000nn*********` | `nn` maps to flags `F[123C]`.  |
+| `SET Fn`                    | `01100nn*********` | `nn` maps to flags `F[123C]`.  |
 |                           | | |
 | **Assignment Operations** | | |
-| `Rx := 0`                   | `1000000******xxx` |                                |
+| `Rx := 0`                   | `1000000******xxx` | Reset register.                |
 | `Rx := FLAGS`               | `1000001******xxx` | The flags map to `0x00FF`.     |
 | `Rx := RANDOM`              | `1000010******xxx` | A random number is generated.  |
 | `Rx := Ry`                  | `1000011***yyyxxx` | `Ry` includes `PC` and `IR`.   |
