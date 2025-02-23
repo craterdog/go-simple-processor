@@ -62,11 +62,11 @@ integrity of the processor.
 | `FLAGS := Rx`               | `01011***********` | Flags map to `0x00F0` in `Rx`. |
 |                           | | |
 | **Assignment Operations** | | |
-| `Rx := 0`                   | `1000000******xxx` | Reset `Rx`.                    |
-| `Rx := RANDOM`              | `1000001******xxx` | Put a random number in `Rx`.   |
-| `Rx := Ry`                  | `1000010***yyyxxx` | `Ry` includes `PC` and `IR`.   |
-| `Rx := Rx + offset`         | `10000110oooooxxx` | Increment `Rx` by `[1..32]`.   |
-| `Rx := Rx - offset`         | `10000111oooooxxx` | Decrement `Rx` by `[1..32]`.   |
+| `Rx += offset`              | `10000000oooooxxx` | Increment `Rx` by `[1..32]`.   |
+| `Rx -= offset`              | `10000001oooooxxx` | Decrement `Rx` by `[1..32]`.   |
+| `Rx := 0`                   | `1000001******xxx` | Reset `Rx` to zero.            |
+| `Rx := RANDOM`              | `1000010******xxx` | Put a random number in `Rx`.   |
+| `Rx := Ry`                  | `1000011***yyyxxx` | Save `Ry` in `Rx`.             |
 | `Rx := constant`            | `100010cccccccxxx` | Set `Rx` to `[1..128]`.        |
 | `Rx := -constant`           | `100011cccccccxxx` | Set `Rx` to `-[1..128]`.       |
 |                        | | |
