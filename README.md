@@ -50,7 +50,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 |                     | | |
 | **Flag Operations** | | |
 | `CLEAR Fn`                  | `01000nn*********` | `nn` maps to flags `F[123C]`.  |
-| `SET Fn`                    | `01100nn*********` | `nn` maps to flags `F[123C]`.  |
+| `SET Fn`                    | `01001nn*********` | `nn` maps to flags `F[123C]`.  |
+| `MAP flags`                 | `011ffff*********` | `ffff` maps to `F[123C]`.      |
 |                           | | |
 | **Assignment Operations** | | |
 | `Rx := 0`                   | `1000000******xxx` | Reset register.                |
