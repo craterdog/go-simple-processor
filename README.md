@@ -39,62 +39,64 @@ Central Processing Unit (CPU) and the Memory Unit.
 
 ### Instruction Set
 
-| Mnemonic                    | Instruction        | Notes                          |
+| Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
 | **Control Operations** | | |
-| `SKIP`                      | `0000000000000000` | This instruction does nothing. |
-| `JUMP BY offset`            | `0000oooooooooooo` | The offset is `[1..4096]`.     |
-| `JUMP BY -offset`           | `0001oooooooooooo` | The offset is `[1..4096]`.     |
-| `JUMP BY offset ON Fn`      | `0010nnnooooooooo` | The offset is `[1..512]`.      |
-| `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | The offset is `[1..512]`.      |
+| `SKIP`                      | `0000000000000000` | Execute the next instruction.  |
+| `JUMP BY offset`            | `0000oooooooooooo` | Jump forward by `[1..4096]`.   |
+| `JUMP BY -offset`           | `0001oooooooooooo` | Jump backward by `[1..4096]`.  |
+| `JUMP BY offset ON Fn`      | `0010nnnooooooooo` | Jump forward `[1..512]` if Fn. |
+| `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Jump backward `[1..512]` if Fn.|
 |                     | | |
 | **Flag Operations** | | |
-| `CLEAR Fn`                  | `01000nn*********` | `nn` maps to flags `F[123C]`.  |
-| `SET Fn`                    | `01001nn*********` | `nn` maps to flags `F[123C]`.  |
-| `MAP flags`                 | `011ffff*********` | `ffff` maps to `F[123C]`.      |
+| `CLEAR Fn`                  | `01000nn*********` | Set flag `F[123C]` to false.   |
+| `SET Fn`                    | `01001nn*********` | Set flag `F[123C]` to true.    |
+| `Rx := FLAGS`               | `01010********xxx` | Flags map to `0x00FF` in `Rx`. |
+| `FLAGS := Rx`               | `01011***********` | Flags map to `0x00FF` in `Rx`. |
 |                           | | |
 | **Assignment Operations** | | |
-| `Rx := 0`                   | `1000000******xxx` | Reset register.                |
-| `Rx := FLAGS`               | `1000001******xxx` | The flags map to `0x00FF`.     |
-| `Rx := RANDOM`              | `1000010******xxx` | A random number is generated.  |
-| `Rx := Ry`                  | `1000011***yyyxxx` | `Ry` includes `PC` and `IR`.   |
-| `Rx := constant`            | `100010cccccccxxx` | The constant is `[1..128]`.    |
-| `Rx := -constant`           | `100011cccccccxxx` | The constant is `[1..128]`.    |
+| `Rx := 0`                   | `1000000******xxx` | Reset the register.            |
+| `Rx := RANDOM`              | `1000001******xxx` | Generate a random number.      |
+| `Rx := Ry`                  | `1000010***yyyxxx` | `Ry` includes `PC` and `IR`.   |
+| `Rx := Rx + offset`         | `10000110oooooxxx` | Increment `Rx` by `[1..32]`.   |
+| `Rx := Rx - offset`         | `10000111oooooxxx` | Decrement `Rx` by `[1..32]`.   |
+| `Rx := constant`            | `100010cccccccxxx` | Set `Rx` to `[1..128]`.        |
+| `Rx := -constant`           | `100011cccccccxxx` | Set `Rx` to `-[1..128]`.       |
 |                        | | |
 | **Logical Operations** | | |
-| `Rx := Ry AND Rz`           | `1001000zzzyyyxxx` | Logical AND.                   |
-| `Rx := NOT (Ry AND Rz)`     | `1001001zzzyyyxxx` | Logical NAND.                  |
-| `Rx := Ry SAN Rz`           | `1001010zzzyyyxxx` | Logical SAN.                   |
-| `Rx := NOT (Ry SAN Rz)`     | `1001011zzzyyyxxx` | Logical NSAN.                  |
-| `Rx := Ry IOR Rz`           | `1001100zzzyyyxxx` | Logical OR.                    |
-| `Rx := NOT (Ry IOR Rz)`     | `1001101zzzyyyxxx` | Logical NOR.                   |
-| `Rx := Ry XOR Rz`           | `1001110zzzyyyxxx` | Logical XOR.                   |
-| `Rx := NOT (Ry XOR Rz)`     | `1001111zzzyyyxxx` | Logical NXOR.                  |
+| `Rx := Ry AND Rz`           | `1001000zzzyyyxxx` | Perform a logical AND.         |
+| `Rx := NOT (Ry AND Rz)`     | `1001001zzzyyyxxx` | Perform a logical NAND.        |
+| `Rx := Ry SAN Rz`           | `1001010zzzyyyxxx` | Perform a logical SAN.         |
+| `Rx := NOT (Ry SAN Rz)`     | `1001011zzzyyyxxx` | Perform a logical NSAN.        |
+| `Rx := Ry IOR Rz`           | `1001100zzzyyyxxx` | Perform a logical OR.          |
+| `Rx := NOT (Ry IOR Rz)`     | `1001101zzzyyyxxx` | Perform a logical NOR.         |
+| `Rx := Ry XOR Rz`           | `1001110zzzyyyxxx` | Perform a logical XOR.         |
+| `Rx := NOT (Ry XOR Rz)`     | `1001111zzzyyyxxx` | Perform a logical NXOR.        |
 |                           | | |
 | **Relational Operations** | | |
-| `Rx := Ry >> Rz`            | `1010001zzzyyyxxx` | Greater than.                  |
-| `Rx := Ry == Rz`            | `1010010zzzyyyxxx` | Equal to.                      |
-| `Rx := Ry >= Rz`            | `1010011zzzyyyxxx` | Greater than or equal to.      |
-| `Rx := Ry << Rz`            | `1010100zzzyyyxxx` | Less than.                     |
-| `Rx := Ry <> Rz`            | `1010101zzzyyyxxx` | Not equal to.                  |
-| `Rx := Ry <= Rz`            | `1010110zzzyyyxxx` | Less than or equal to.         |
+| `Rx := Ry >> Rz`            | `1010001zzzyyyxxx` | Is greater than.               |
+| `Rx := Ry == Rz`            | `1010010zzzyyyxxx` | Is equal to.                   |
+| `Rx := Ry >= Rz`            | `1010011zzzyyyxxx` | Is greater than or equal to.   |
+| `Rx := Ry << Rz`            | `1010100zzzyyyxxx` | Is less than.                  |
+| `Rx := Ry <> Rz`            | `1010101zzzyyyxxx` | Is not equal to.               |
+| `Rx := Ry <= Rz`            | `1010110zzzyyyxxx` | Is less than or equal to.      |
 |                           | | |
 | **Arithmetic Operations** | | |
-| `Rx := NOT Ry`              | `1011000***yyyxxx` | Take the one's complement.     |
-| `Rx := -Ry`                 | `1011001***yyyxxx` | Take the two's complement.     |
+| `Rx := NOT Ry`              | `1011000***yyyxxx` | One's complement of `Ry`.      |
+| `Rx := -Ry`                 | `1011001***yyyxxx` | Two's complement of `Ry`.      |
 | `Rx := FC -> Ry`            | `1011010***yyyxxx` | Shift right with carry.        |
 | `Rx := Ry <- FC`            | `1011011***yyyxxx` | Shift left with carry.         |
 | `Rx := FN -> Ry`            | `1011100***yyyxxx` | Divide by 2 w/ sign extension. |
 | `Rx := Ry + Rz + FC`        | `1011101zzzyyyxxx` | Addition with carry.           |
-| `Rx := Ry + offset`         | `1011110oooyyyxxx` | The offset range is `[1..8]`.  |
-| `Rx := Ry - offset`         | `1011111oooyyyxxx` | The offset range is `[1..8]`.  |
+| `Rx := Ry + offset`         | `1011110oooyyyxxx` | Add offset of `[1..8]`.        |
+| `Rx := Ry - offset`         | `1011111oooyyyxxx` | Subtract offset of `[1..8]`.   |
 |                       | | |
 | **Memory Operations** | | |
-| `Rx <- INPUT`               | `11000********xxx` | Load from input.               |
-| `Rx <- @(Ry)`               | `11010*****yyyxxx` | Load from memory address.      |
-| `Rx -> OUTPUT`              | `11100********xxx` | Store to output.               |
-| `Rx -> @(Ry)`               | `11110*****yyyxxx` | Store to memory address.       |
-| `RESET`                     | `1111111111111111` | Processor, I/O and memory.     |
+| `Rx <- INPUT`               | `11000********xxx` | Read `Rx` from input.          |
+| `Rx <- @(Ry)`               | `11010*****yyyxxx` | Load `Rx` from memory address. |
+| `Rx -> OUTPUT`              | `11100********xxx` | Write `Rx` to output.          |
+| `Rx -> @(Ry)`               | `11110*****yyyxxx` | Store `Rx` in memory address.  |
+| `RESET`                     | `1111111111111111` | Reset CPU, I/O and memory.     |
 
 ### Getting Started
 To include the Go packages for this module use the following import statement:
