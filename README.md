@@ -55,8 +55,8 @@ Central Processing Unit (CPU) and the Memory Unit.
 | `FLAGS := Rx`               | `01011***********` | Flags map to `0x00FF` in `Rx`. |
 |                           | | |
 | **Assignment Operations** | | |
-| `Rx := 0`                   | `1000000******xxx` | Reset the register.            |
-| `Rx := RANDOM`              | `1000001******xxx` | Generate a random number.      |
+| `Rx := 0`                   | `1000000******xxx` | Reset the `Rx`.                |
+| `Rx := RANDOM`              | `1000001******xxx` | Put a random number in `Rx`.   |
 | `Rx := Ry`                  | `1000010***yyyxxx` | `Ry` includes `PC` and `IR`.   |
 | `Rx := Rx + offset`         | `10000110oooooxxx` | Increment `Rx` by `[1..32]`.   |
 | `Rx := Rx - offset`         | `10000111oooooxxx` | Decrement `Rx` by `[1..32]`.   |
@@ -84,10 +84,10 @@ Central Processing Unit (CPU) and the Memory Unit.
 | **Arithmetic Operations** | | |
 | `Rx := NOT Ry`              | `1011000***yyyxxx` | One's complement of `Ry`.      |
 | `Rx := -Ry`                 | `1011001***yyyxxx` | Two's complement of `Ry`.      |
-| `Rx := FC -> Ry`            | `1011010***yyyxxx` | Shift right with carry.        |
-| `Rx := Ry <- FC`            | `1011011***yyyxxx` | Shift left with carry.         |
-| `Rx := FN -> Ry`            | `1011100***yyyxxx` | Divide by 2 w/ sign extension. |
-| `Rx := Ry + Rz + FC`        | `1011101zzzyyyxxx` | Addition with carry.           |
+| `Rx := FC -> Ry`            | `1011010***yyyxxx` | `Ry` shifted right with carry. |
+| `Rx := Ry <- FC`            | `1011011***yyyxxx` | `Ry` shifted left with carry.  |
+| `Rx := FN -> Ry`            | `1011100***yyyxxx` | Divide `Ry` by `2`.            |
+| `Rx := Ry + Rz + FC`        | `1011101zzzyyyxxx` | Addition of `Ry` and `Rz`.     |
 | `Rx := Ry + offset`         | `1011110oooyyyxxx` | Add offset of `[1..8]`.        |
 | `Rx := Ry - offset`         | `1011111oooyyyxxx` | Subtract offset of `[1..8]`.   |
 |                       | | |
