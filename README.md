@@ -99,10 +99,10 @@ integrity of the processor.
 | `Rz := Rx + Ry + FC`        | `1011111xxxyyyzzz` | Addition of `Rx` and `Ry`.     |
 |                       | | |
 | **Memory Operations** | | |
-| `Rz <- INPUT`               | `11000********zzz` | Read `Rz` from input.          |
-| `Rz -> OUTPUT`              | `11010********zzz` | Write `Rz` to output.          |
-| `Rz <- @(Rx)`               | `11100**xxx***zzz` | Load `Rz` from memory address. |
-| `Rz -> @(Rx)`               | `11110**xxx***zzz` | Store `Rz` in memory address.  |
+| `Rz <- INPUT`               | `1100001******zzz` | Read `Rz` from input.          |
+| `Ry -> OUTPUT`              | `1101010***yyy***` | Write `Ry` to output.          |
+| `Rz <- @(Rx)`               | `1110101xxx***zzz` | Load `Rz` from memory address. |
+| `Ry -> @(Rx)`               | `1111110xxxyyy***` | Store `Ry` in memory address.  |
 | `RESET`                     | `1111111111111111` | Reset CPU, I/O and memory.     |
 
 ### Getting Started
