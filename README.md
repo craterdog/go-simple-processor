@@ -49,8 +49,8 @@ flags may be set or cleared, again to ensure the integrity of the processor.
 | `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Backward by `[1..512]` if true.|
 |                     | | |
 | **Flag Operations** | | |
-| `CLEAR Fn`                  | `0100nnn*********` | Set flag `[1..8]` to false.    |
-| `SET Fn`                    | `0101nnn*********` | Set flag `[1..8]` to true.     |
+| `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..8]` to false.   |
+| `SET Fn`                    | `0101nnn*********` | Set flag `F[1..8]` to true.    |
 |                           | | |
 | **Assignment Operations** | | |
 | `Rz += offset`              | `10000000ooooozzz` | Increment `Rz` by `[1..32]`.   |
