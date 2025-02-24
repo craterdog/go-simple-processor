@@ -32,13 +32,12 @@ Central Processing Unit (CPU) and the Memory Unit.
  * Addresses `0x0008` - `0xFFFF` are random access memory (RAM)
 
 ### Instruction Set
-The instruction set for this processor consists of 42 (obviously!) instructions
-and one pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1`
-instruction (the traditional "noop" instruction).  The `Rz` register cannot be
-any of the system registers to ensure the integrity of the processor.  The `Rx`
-and `Ry` registers may be any of the eight registers.  Similarly, only the user
-status flags may be set or cleared, again to ensure the integrity of the
-processor.
+The instruction set for this processor consists of 40 instructions and one
+pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1` instruction
+(the traditional "NOP" instruction).  The `Rz` register cannot be any of the
+system registers to ensure the integrity of the processor.  The `Rx` and `Ry`
+registers may be any of the eight registers.  Similarly, only the user status
+flags may be set or cleared, again to ensure the integrity of the processor.
 
 | Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
@@ -50,10 +49,8 @@ processor.
 | `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Backward by `[1..512]` if true.|
 |                     | | |
 | **Flag Operations** | | |
-| `CLEAR Fn`                  | `01000nn*********` | Set flag `F[123C]` to false.   |
-| `SET Fn`                    | `01001nn*********` | Set flag `F[123C]` to true.    |
-| `Rz := FLAGS`               | `01010********zzz` | Flags map to `0x00FF` in `Rz`. |
-| `FLAGS := Rz`               | `01011********zzz` | Flags map to `0x00F0` in `Rz`. |
+| `CLEAR Fn`                  | `0100nnn*********` | Set a user flag to false.      |
+| `SET Fn`                    | `0101nnn*********` | Set a user flag to true.       |
 |                           | | |
 | **Assignment Operations** | | |
 | `Rz += offset`              | `10000000ooooozzz` | Increment `Rz` by `[1..32]`.   |
