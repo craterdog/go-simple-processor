@@ -17,18 +17,12 @@ Central Processing Unit (CPU) and the Memory Unit.
 
 ![Architecture Model](https://raw.githubusercontent.com/wiki/craterdog/go-simple-processor/docs/images/Processor%20Architecture.jpg)
 
-#### Flags
- * `Fn` {general purpose flags: `F1` - `F3`}
- * `FC` {carry flag}
- * `FN` {negative flag}
- * `FZ` {zero flag}
- * `FV` {overflow flag: `FN XOR FC`}
- * `FI` {input is available flag}
-
 #### Registers
- * `Rn` {general purpose registers: `R1` - `R6`}
- * `IR` {instruction register}
- * `PC` {program counter}
+ * `Rn` {general purpose registers: `R1` - `R4`}
+ * `PC` {program counter containing the address of the current instruction}
+ * `IR` {instruction register containing the instruction being executed}
+ * `AD` {address register containing the end of the address space}
+ * `ST` {status register containing system and user flags}
 
 #### Memory
  * 64K of addressable words {`0x0000` - `0xFFFF`}
@@ -41,10 +35,10 @@ Central Processing Unit (CPU) and the Memory Unit.
 The instruction set for this processor consists of 42 (obviously!) instructions
 and one pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1`
 instruction (the traditional "noop" instruction).  The `Rz` register cannot be
-the `PC` or `IR` registers to ensure the integrity of the processor.  The `Rx`
-and `Ry` registers may be any of the eight registers.  Similarly, only the `F1`,
-`F2`, `F3`, and `FC` flags may be set or cleared, again to ensure the
-integrity of the processor.
+any of the system registers to ensure the integrity of the processor.  The `Rx`
+and `Ry` registers may be any of the eight registers.  Similarly, only the user
+status flags may be set or cleared, again to ensure the integrity of the
+processor.
 
 | Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
