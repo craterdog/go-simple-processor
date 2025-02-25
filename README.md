@@ -31,8 +31,8 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `FN` {negative result flag}
  * `FZ` {zero result flag}
  * `FB` {boot mode flag}
- * `FR` {read error flag}
- * `FW` {write error flag}
+ * `FD` {data mode flag}
+ * `FI` {I/O error flag}
  * `FA` {address error flag}
  * `FP` {permission error flag}
 
