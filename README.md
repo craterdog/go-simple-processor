@@ -22,7 +22,18 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `PC` {program counter containing the address of the current instruction}
  * `IR` {instruction register containing the instruction being executed}
  * `AD` {address register containing the end of the address space}
- * `ST` {status register containing system and user flags}
+ * `ST` {status register containing eight system flags and eight user flags}
+
+#### Flags
+ * `Fn` {general purpose user flags: `F1` - `F8` which are setable}
+ * `FC` {carry flag which is setable}
+ * `FV` {overflow flag}
+ * `FN` {negative flag}
+ * `FZ` {zero flag}
+ * `FB` {boot flag}
+ * `FI` {input available flag}
+ * `FO` {output available flag}
+ * `FE` {error flag}
 
 #### Memory
  * 64K of addressable words {`0x0000` - `0xFFFF`}
@@ -49,45 +60,48 @@ flags may be set or cleared, again to ensure the integrity of the processor.
 | `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Backward by `[1..512]` if true.|
 |                     | | |
 | **Flag Operations** | | |
-| `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..8]` to false.   |
-| `SET Fn`                    | `0101nnn*********` | Set flag `F[1..8]` to true.    |
+| `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..8C]` to false.  |
+| `SET Fn`                    | `0101nnn*********` | Set flag `F[1..8C]` to true.   |
 |                           | | |
-| **Assignment Operations** | | |
-| `Rz += offset`              | `10000000ooooozzz` | Increment `Rz` by `[1..32]`.   |
-| `Rz -= offset`              | `10000001ooooozzz` | Decrement `Rz` by `[1..32]`.   |
-| `Rz := 0`                   | `1000001******zzz` | Reset `Rz` to zero.            |
-| `Rz := RANDOM`              | `1000010******zzz` | Put a random number in `Rz`.   |
-| `Rz := Rx`                  | `1000011xxx***zzz` | Save `Rx` in `Rz`.             |
-| `Rz := constant`            | `100010ccccccczzz` | Set `Rz` to `[1..128]`.        |
-| `Rz := -constant`           | `100011ccccccczzz` | Set `Rz` to `-[1..128]`.       |
+| **Unary Operations** | | |
+| `Rz := RANDOM`              | `1000000******zzz` | Put a random number in `Rz`.   |
+| `Rz := 1`                   | `1000001******zzz` | Put `1` in `Rz`.               |
+| `Rz := Rx`                  | `1000010xxx***zzz` | Put the value of `Rx` in `Rz`. |
+| `Rz := NOT Rx`              | `1000011xxx***zzz` | One's complement of `Rx`.      |
+| `Rz := -Rx`                 | `1000100xxx***zzz` | Two's complement of `Rx`.      |
+| `Rz := Rx <- FC`            | `1000101xxx***zzz` | `Rx` shifted left with carry.  |
+| `Rz := FC -> Rx`            | `1000110xxx***zzz` | `Rx` shifted right with carry. |
+| `Rz := FN -> Rx`            | `1000111xxx***zzz` | `Rx` shifted right with sign.  |
+|                           | | |
+| **Binary Operations** | | |
+| `Rz := Rx + 1`              | `1001000xxx***zzz` | Put `Rx` plus `1` in `Rz`.     |
+| `Rz := Rx - 1`              | `1001001xxx***zzz` | Put `Rx` minus `1` in `Rz`.    |
+| `Rz := Rx + 2`              | `1001010xxx***zzz` | Put `Rx` plus `2` in `Rz`.     |
+| `Rz := Rx - 2`              | `1001011xxx***zzz` | Put `Rx` minus `2` in `Rz`.    |
+| `Rz := Rx + 4`              | `1001100xxx***zzz` | Put `Rx` plus `4` in `Rz`.     |
+| `Rz := Rx - 4`              | `1001101xxx***zzz` | Put `Rx` minus `4` in `Rz`.    |
+| `Rz := Rx + Ry + FC`        | `1001110xxx***zzz` | Put `Rx` plus `Ry` in `Rz`.    |
+| `Rz := Rx - Ry - FC`        | `1001111xxx***zzz` | Put `Rx` minus `Ry` in `Rz`.   |
+|                           | | |
+| **Boolean Operations** | | |
+| `Rz := FALSE`               | `1010000******zzz` | Put `0` in `Rz`.               |
+| `Rz := Rx >> Ry`            | `1010001xxxyyyzzz` | `Rx` is greater than `Ry`.     |
+| `Rz := Rx == Ry`            | `1010010xxxyyyzzz` | `Rx` is equal to `Ry`.         |
+| `Rz := Rx >= Ry`            | `1010011xxxyyyzzz` | `Rx` is not less than to `Ry`. |
+| `Rz := Rx << Ry`            | `1010100xxxyyyzzz` | `Rx` is less than `Ry`.        |
+| `Rz := Rx <> Ry`            | `1010101xxxyyyzzz` | `Rx` is not equal to `Ry`.     |
+| `Rz := Rx <= Ry`            | `1010110xxxyyyzzz` | `Rx` is not greater than `Ry`. |
+| `Rz := TRUE`                | `1010111******zzz` | Put `-1` in `Rz`.              |
 |                        | | |
 | **Logical Operations** | | |
-| `Rz := Rx AND Ry`           | `1001000xxxyyyzzz` | Perform a logical AND.         |
-| `Rz := NOT (Rx AND Ry)`     | `1001001xxxyyyzzz` | Perform a logical NAND.        |
-| `Rz := Rx SAN Ry`           | `1001010xxxyyyzzz` | Perform a logical SAN.         |
-| `Rz := NOT (Rx SAN Ry)`     | `1001011xxxyyyzzz` | Perform a logical NSAN.        |
-| `Rz := Rx IOR Ry`           | `1001100xxxyyyzzz` | Perform a logical OR.          |
-| `Rz := NOT (Rx IOR Ry)`     | `1001101xxxyyyzzz` | Perform a logical NOR.         |
-| `Rz := Rx XOR Ry`           | `1001110xxxyyyzzz` | Perform a logical XOR.         |
-| `Rz := NOT (Rx XOR Ry)`     | `1001111xxxyyyzzz` | Perform a logical NXOR.        |
-|                           | | |
-| **Relational Operations** | | |
-| `Rz := Rx >> Ry`            | `1010001xxxyyyzzz` | Is greater than.               |
-| `Rz := Rx == Ry`            | `1010010xxxyyyzzz` | Is equal to.                   |
-| `Rz := Rx >= Ry`            | `1010011xxxyyyzzz` | Is greater than or equal to.   |
-| `Rz := Rx << Ry`            | `1010100xxxyyyzzz` | Is less than.                  |
-| `Rz := Rx <> Ry`            | `1010101xxxyyyzzz` | Is not equal to.               |
-| `Rz := Rx <= Ry`            | `1010110xxxyyyzzz` | Is less than or equal to.      |
-|                           | | |
-| **Arithmetic Operations** | | |
-| `Rz := NOT Rx`              | `1011000xxx***zzz` | One's complement of `Rx`.      |
-| `Rz := -Rx`                 | `1011001xxx***zzz` | Two's complement of `Rx`.      |
-| `Rz := FC -> Rx`            | `1011010xxx***zzz` | `Rx` shifted right with carry. |
-| `Rz := Rx <- FC`            | `1011011xxx***zzz` | `Rx` shifted left with carry.  |
-| `Rz := FN -> Rx`            | `1011100xxx***zzz` | Divide `Rx` by `2`.            |
-| `Rz := Rx + offset`         | `1011101xxxooozzz` | Add offset of `[1..8]`.        |
-| `Rz := Rx - offset`         | `1011110xxxooozzz` | Subtract offset of `[1..8]`.   |
-| `Rz := Rx + Ry + FC`        | `1011111xxxyyyzzz` | Addition of `Rx` and `Ry`.     |
+| `Rz := Rx AND Ry`           | `1011000xxxyyyzzz` | Perform a bit-wise AND.        |
+| `Rz := NOT (Rx AND Ry)`     | `1011001xxxyyyzzz` | Perform a bit-wise NAND.       |
+| `Rz := Rx SAN Ry`           | `1011010xxxyyyzzz` | Perform a bit-wise SAN.        |
+| `Rz := NOT (Rx SAN Ry)`     | `1011011xxxyyyzzz` | Perform a bit-wise NSAN.       |
+| `Rz := Rx IOR Ry`           | `1011100xxxyyyzzz` | Perform a bit-wise IOR.        |
+| `Rz := NOT (Rx IOR Ry)`     | `1011101xxxyyyzzz` | Perform a bit-wise NIOR.       |
+| `Rz := Rx XOR Ry`           | `1011110xxxyyyzzz` | Perform a bit-wise XOR.        |
+| `Rz := NOT (Rx XOR Ry)`     | `1011111xxxyyyzzz` | Perform a bit-wise NXOR.       |
 |                       | | |
 | **Memory Operations** | | |
 | `Rz <- INPUT`               | `1100001******zzz` | Read `Rz` from input.          |
