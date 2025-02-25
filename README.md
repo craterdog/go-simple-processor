@@ -22,18 +22,19 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `PC` {program counter containing the address of the current instruction}
  * `IR` {instruction register containing the instruction being executed}
  * `AD` {address register containing the end of the address space}
- * `ST` {status register containing eight system flags and eight user flags}
+ * `ST` {status register containing nine system flags and seven user flags}
 
 #### Flags
- * `Fn` {general purpose user flags: `F1` - `F8` which are setable}
+ * `Fn` {general purpose user flags: `F1` - `F7` which are setable}
  * `FC` {carry flag which is setable}
- * `FV` {overflow flag}
- * `FN` {negative flag}
- * `FZ` {zero flag}
- * `FB` {boot flag}
+ * `FV` {arithmetic overflow flag}
+ * `FN` {negative result flag}
+ * `FZ` {zero result flag}
  * `FI` {input available flag}
  * `FO` {output available flag}
- * `FE` {error flag}
+ * `FB` {boot mode flag}
+ * `FL` {load error flag}
+ * `FE` {execution error flag}
 
 #### Memory
  * 64K of addressable words {`0x0000` - `0xFFFF`}
@@ -60,8 +61,8 @@ flags may be set or cleared, again to ensure the integrity of the processor.
 | `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Backward by `[1..512]` if true.|
 |                     | | |
 | **Flag Operations** | | |
-| `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..8C]` to false.  |
-| `SET Fn`                    | `0101nnn*********` | Set flag `F[1..8C]` to true.   |
+| `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..7C]` to false.  |
+| `SET Fn`                    | `0101nnn*********` | Set flag `F[1..7C]` to true.   |
 |                           | | |
 | **Unary Operations** | | |
 | `Rz := RANDOM`              | `1000000******zzz` | Put a random number in `Rz`.   |
