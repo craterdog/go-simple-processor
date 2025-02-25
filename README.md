@@ -44,7 +44,7 @@ Central Processing Unit (CPU) and the Memory Unit.
  * Addresses `0x0008` - `0xFFFF` are random access memory (RAM)
 
 ### Instruction Set
-The instruction set for this processor consists of 44 instructions and one
+The instruction set for this processor consists of 45 instructions and one
 pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1` instruction
 (the traditional "NOP" instruction).
 
@@ -111,6 +111,7 @@ processor.
 | **Memory Operations** | | |
 | `Rz <- INPUT`               | `1100001******zzz` | Read `Rz` from input.          |
 | `Ry -> OUTPUT`              | `1101010***yyy***` | Write `Ry` to output.          |
+| `Rz <- constant`            | `1110001******zzz` | Load `Rz` with constant.       |
 | `Rz <- @(Rx)`               | `1110101xxx***zzz` | Load `Rz` from memory address. |
 | `Ry -> @(Rx)`               | `1111110xxxyyy***` | Store `Ry` in memory address.  |
 | `RESET`                     | `1111111111111111` | Reset CPU, I/O and memory.     |
