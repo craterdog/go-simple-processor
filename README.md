@@ -21,7 +21,7 @@ Central Processing Unit (CPU) and the Memory Unit.
  * `Rn` {general purpose registers: `R1` - `R4`}
  * `PC` {program counter containing the address of the current instruction}
  * `IR` {instruction register containing the instruction being executed}
- * `AD` {address register containing the end of the address space}
+ * `DA` {address register containing the start of the data memory}
  * `ST` {status register containing nine system flags and seven user flags}
 
 #### Flags
