@@ -27,14 +27,14 @@ Central Processing Unit (CPU) and the Memory Unit.
 #### Flags
  * `Fn` {general purpose user flags: `F1` - `F7` which are setable}
  * `FC` {carry flag which is setable}
- * `FV` {arithmetic overflow flag}
+ * `FO` {overflow flag}
  * `FN` {negative result flag}
  * `FZ` {zero result flag}
- * `FI` {input available flag}
- * `FO` {output available flag}
  * `FB` {boot mode flag}
- * `FL` {load error flag}
- * `FE` {execution error flag}
+ * `FR` {read error flag}
+ * `FW` {write error flag}
+ * `FA` {address error flag}
+ * `FP` {permission error flag}
 
 #### Memory
  * 64K of addressable words {`0x0000` - `0xFFFF`}
@@ -44,12 +44,15 @@ Central Processing Unit (CPU) and the Memory Unit.
  * Addresses `0x0008` - `0xFFFF` are random access memory (RAM)
 
 ### Instruction Set
-The instruction set for this processor consists of 40 instructions and one
+The instruction set for this processor consists of 44 instructions and one
 pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1` instruction
-(the traditional "NOP" instruction).  The `Rz` register cannot be any of the
-system registers to ensure the integrity of the processor.  The `Rx` and `Ry`
-registers may be any of the eight registers.  Similarly, only the user status
-flags may be set or cleared, again to ensure the integrity of the processor.
+(the traditional "NOP" instruction).
+
+Except during the boot process (i.e. `FB` is `TRUE`) the `Rz` register cannot be
+any of the system registers to ensure the integrity of the processor.  The `Rx`
+and `Ry` registers may be any of the eight registers.  Similarly, only the user
+status flags may be set or cleared, again to ensure the integrity of the
+processor.
 
 | Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
@@ -63,6 +66,7 @@ flags may be set or cleared, again to ensure the integrity of the processor.
 | **Flag Operations** | | |
 | `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..7C]` to false.  |
 | `SET Fn`                    | `0101nnn*********` | Set flag `F[1..7C]` to true.   |
+| `FLIP Fn`                   | `0110nnn*********` | Invert flag `F[1..7C]`.        |
 |                           | | |
 | **Unary Operations** | | |
 | `Rz := RANDOM`              | `1000000******zzz` | Put a random number in `Rz`.   |
