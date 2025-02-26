@@ -44,7 +44,7 @@ Central Processing Unit (CPU) and the Memory Unit.
  * Addresses `0x0008` - `0xFFFF` are random access memory (RAM)
 
 ### Instruction Set
-The instruction set for this processor consists of 45 instructions and one
+The instruction set for this processor consists of 43 instructions and one
 pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1` instruction
 (the traditional "NOP" instruction).
 
@@ -57,11 +57,9 @@ processor.
 | Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
 | **Control Operations** | | |
-| `SKIP`                      | `0000000000000000` | Forward by `1`.                |
-| `JUMP BY offset`            | `0000oooooooooooo` | Forward by `[1..4096]`.        |
-| `JUMP BY -offset`           | `0001oooooooooooo` | Backward by `[1..4096]`.       |
-| `JUMP BY offset ON Fn`      | `0010nnnooooooooo` | Forward by `[1..512]` if true. |
-| `JUMP BY -offset ON Fn`     | `0011nnnooooooooo` | Backward by `[1..512]` if true.|
+| `SKIP`                      | `0000000000000000` | Do nothing.                    |
+| `JUMP BY offset`            | `000ooooooooooooo` | Jump by `[-4096..4095]`.       |
+| `JUMP BY offset ON Fn`      | `001nnnnooooooooo` | Jump by `[-256..255]` if true. |
 |                     | | |
 | **Flag Operations** | | |
 | `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..7C]` to false.  |
