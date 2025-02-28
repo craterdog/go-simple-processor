@@ -27,7 +27,7 @@ Central Processing Unit (CPU) and the Memory Unit.
 #### Flags
  * `Fn` {general purpose user flags: `F1` - `F7` which are setable}
  * `FC` {carry flag which is setable}
- * `FO` {overflow flag}
+ * `FV` {overflow flag}
  * `FN` {negative result flag}
  * `FZ` {zero result flag}
  * `FB` {boot mode flag}
