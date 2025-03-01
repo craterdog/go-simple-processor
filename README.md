@@ -88,12 +88,12 @@ processor.
 |                           | | |
 | **Boolean Operations** | | |
 | `Rz := FALSE`               | `1010000******zzz` | Put `0` in `Rz`.               |
-| `Rz := Rx >> Ry`            | `1010001xxxyyyzzz` | `Rx` is greater than `Ry`.     |
+| `Rz := Rx << Ry`            | `1010001xxxyyyzzz` | `Rx` is less than `Ry`.        |
 | `Rz := Rx == Ry`            | `1010010xxxyyyzzz` | `Rx` is equal to `Ry`.         |
-| `Rz := Rx >= Ry`            | `1010011xxxyyyzzz` | `Rx` is not less than to `Ry`. |
-| `Rz := Rx << Ry`            | `1010100xxxyyyzzz` | `Rx` is less than `Ry`.        |
+| `Rz := Rx <= Ry`            | `1010011xxxyyyzzz` | `Rx` is not greater than `Ry`. |
+| `Rz := Rx >> Ry`            | `1010100xxxyyyzzz` | `Rx` is greater than `Ry`.     |
 | `Rz := Rx <> Ry`            | `1010101xxxyyyzzz` | `Rx` is not equal to `Ry`.     |
-| `Rz := Rx <= Ry`            | `1010110xxxyyyzzz` | `Rx` is not greater than `Ry`. |
+| `Rz := Rx >= Ry`            | `1010110xxxyyyzzz` | `Rx` is not less than `Ry`.    |
 | `Rz := TRUE`                | `1010111******zzz` | Put `-1` in `Rz`.              |
 |                        | | |
 | **Logical Operations** | | |
