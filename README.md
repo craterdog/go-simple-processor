@@ -56,17 +56,17 @@ processor.
 
 | Mnemonic                    | Instruction        | Description
 |-----------------------------|--------------------|--------------------------------|
-| **Control Operations** | | |
+| **Control Operations**      | `00**************` | Modify the program counter.    |
 | `SKIP`                      | `0000000000000000` | Do nothing.                    |
 | `JUMP BY offset`            | `000ooooooooooooo` | Jump by `[-4096..4095]`.       |
 | `JUMP BY offset ON Fn`      | `001nnnnooooooooo` | Jump by `[-256..255]` if true. |
 |                     | | |
-| **Flag Operations** | | |
+| **Flag Operations**         | `01**************` | Modify the status flags.       |
 | `CLEAR Fn`                  | `0100nnn*********` | Set flag `F[1..7C]` to false.  |
 | `SET Fn`                    | `0101nnn*********` | Set flag `F[1..7C]` to true.   |
 | `FLIP Fn`                   | `0110nnn*********` | Invert flag `F[1..7C]`.        |
 |                           | | |
-| **Unary Operations** | | |
+| **Unary Operations**        | `1000************` | Operate on a single value.     |
 | `Rz := RANDOM`              | `1000000******zzz` | Put a random number in `Rz`.   |
 | `Rz := 1`                   | `1000001******zzz` | Put `1` in `Rz`.               |
 | `Rz := Rx`                  | `1000010xxx***zzz` | Put the value of `Rx` in `Rz`. |
@@ -76,7 +76,7 @@ processor.
 | `Rz := FC -> Rx`            | `1000110xxx***zzz` | `Rx` shifted right with carry. |
 | `Rz := FN -> Rx`            | `1000111xxx***zzz` | `Rx` shifted right with sign.  |
 |                           | | |
-| **Binary Operations** | | |
+| **Binary Operations**       | `1001************` | Operate on two values.         |
 | `Rz := Rx + 1`              | `1001000xxx***zzz` | Put `Rx` plus `1` in `Rz`.     |
 | `Rz := Rx - 1`              | `1001001xxx***zzz` | Put `Rx` minus `1` in `Rz`.    |
 | `Rz := Rx + 2`              | `1001010xxx***zzz` | Put `Rx` plus `2` in `Rz`.     |
@@ -86,7 +86,7 @@ processor.
 | `Rz := Rx + Ry + FC`        | `1001110xxx***zzz` | Put `Rx` plus `Ry` in `Rz`.    |
 | `Rz := Rx - Ry - FC`        | `1001111xxx***zzz` | Put `Rx` minus `Ry` in `Rz`.   |
 |                           | | |
-| **Boolean Operations** | | |
+| **Boolean Operations**      | `1010************` | Return a boolean value.        |
 | `Rz := FALSE`               | `1010000******zzz` | Put `0` in `Rz`.               |
 | `Rz := Rx << Ry`            | `1010001xxxyyyzzz` | `Rx` is less than `Ry`.        |
 | `Rz := Rx == Ry`            | `1010010xxxyyyzzz` | `Rx` is equal to `Ry`.         |
@@ -96,7 +96,7 @@ processor.
 | `Rz := Rx >= Ry`            | `1010110xxxyyyzzz` | `Rx` is not less than `Ry`.    |
 | `Rz := TRUE`                | `1010111******zzz` | Put `-1` in `Rz`.              |
 |                        | | |
-| **Logical Operations** | | |
+| **Logic Operations**        | `1011************` | Perform bit-wise logic.        |
 | `Rz := Rx AND Ry`           | `1011000xxxyyyzzz` | Perform a bit-wise AND.        |
 | `Rz := NOT (Rx AND Ry)`     | `1011001xxxyyyzzz` | Perform a bit-wise NAND.       |
 | `Rz := Rx SAN Ry`           | `1011010xxxyyyzzz` | Perform a bit-wise SAN.        |
@@ -106,7 +106,7 @@ processor.
 | `Rz := Rx XOR Ry`           | `1011110xxxyyyzzz` | Perform a bit-wise XOR.        |
 | `Rz := NOT (Rx XOR Ry)`     | `1011111xxxyyyzzz` | Perform a bit-wise NXOR.       |
 |                       | | |
-| **Memory Operations** | | |
+| **Memory Operations**       | `11**************` | Access memory.                 |
 | `Rz <- INPUT`               | `1100001******zzz` | Read `Rz` from input.          |
 | `Ry -> OUTPUT`              | `1101010***yyy***` | Write `Ry` to output.          |
 | `Rz <- constant`            | `1110001******zzz` | Load `Rz` with constant.       |
