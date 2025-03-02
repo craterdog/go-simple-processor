@@ -73,8 +73,8 @@ processor.
 | `Rz := NOT Rx`              | `1000011xxx---zzz` | One's complement of `Rx`.      |
 | `Rz := -Rx`                 | `1000100xxx---zzz` | Two's complement of `Rx`.      |
 | `Rz := Rx <- FC`            | `1000101xxx---zzz` | `Rx` shifted left with carry.  |
-| `Rz := FC -> Rx`            | `1000110xxx---zzz` | `Rx` shifted right with carry. |
-| `Rz := FN -> Rx`            | `1000111xxx---zzz` | `Rx` shifted right with sign.  |
+| `Rz := FN -> Rx`            | `1000110xxx---zzz` | `Rx` shifted right with sign.  |
+| `Rz := FC -> Rx`            | `1000111xxx---zzz` | `Rx` shifted right with carry. |
 |                           | | |
 | **Binary Operations**       | `1001------------` | Operate on two values.         |
 | `Rz := Rx + 1`              | `1001000xxx---zzz` | Put `Rx` plus `1` in `Rz`.     |
