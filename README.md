@@ -50,77 +50,32 @@ memory addressing.
  * Addresses `0x0008` - `0xFFFF` are random access memory (RAM)
 
 ### Instruction Set
-The instruction set for this processor consists of 43 instructions and one
-pseudo instruction (`SKIP`) which is equivalent to the `JUMP BY 1` instruction
-(the traditional "NOP" instruction).
+The instruction set for this processor is made up of four types of instructions.
 
-Except during the boot process (i.e. `FB` is `TRUE`) the `Rz` register cannot be
-any of the system registers to ensure the integrity of the processor.  The `Rx`
-and `Ry` registers may be any of the eight registers.  Similarly, only the user
-status flags may be set or cleared, again to ensure the integrity of the
-processor.
+#### Control Instructions
+Each control instruction determines where the next instruction to be executed is
+located in memory.  The location may be fixed or depend on the whether or not a
+particular status flag has been set.
 
-| Mnemonic                    | Instruction        | Description
-|-----------------------------|--------------------|--------------------------------|
-| **Control Operations**      | `00--------------` | Modify the program counter.    |
-| `SKIP`                      | `0000000000000000` | Do nothing.                    |
-| `JUMP BY offset`            | `000ooooooooooooo` | Jump by `[-4096..4095]`.       |
-| `JUMP BY offset ON Fn`      | `001nnnnooooooooo` | Jump by `[-256..255]` if true. |
-|                     | | |
-| **Flag Operations**         | `01--------------` | Modify the status flags.       |
-| `CLEAR Fn`                  | `0100nnn---------` | Set flag `F[1..7C]` to false.  |
-| `SET Fn`                    | `0101nnn---------` | Set flag `F[1..7C]` to true.   |
-| `FLIP Fn`                   | `0110nnn---------` | Invert flag `F[1..7C]`.        |
-|                           | | |
-| **Unary Operations**        | `1000------------` | Operate on a single value.     |
-| `Rz := RANDOM`              | `1000000------zzz` | Put a random number in `Rz`.   |
-| `Rz := 1`                   | `1000001------zzz` | Put `1` in `Rz`.               |
-| `Rz := Rx`                  | `1000010xxx---zzz` | Put the value of `Rx` in `Rz`. |
-| `Rz := NOT Rx`              | `1000011xxx---zzz` | One's complement of `Rx`.      |
-| `Rz := -Rx`                 | `1000100xxx---zzz` | Two's complement of `Rx`.      |
-| `Rz := Rx <- FC`            | `1000101xxx---zzz` | `Rx` shifted left with carry.  |
-| `Rz := FN -> Rx`            | `1000110xxx---zzz` | `Rx` shifted right with sign.  |
-| `Rz := FC -> Rx`            | `1000111xxx---zzz` | `Rx` shifted right with carry. |
-|                           | | |
-| **Binary Operations**       | `1001------------` | Operate on two values.         |
-| `Rz := Rx + 1`              | `1001000xxx---zzz` | Put `Rx` plus `1` in `Rz`.     |
-| `Rz := Rx - 1`              | `1001001xxx---zzz` | Put `Rx` minus `1` in `Rz`.    |
-| `Rz := Rx + 2`              | `1001010xxx---zzz` | Put `Rx` plus `2` in `Rz`.     |
-| `Rz := Rx - 2`              | `1001011xxx---zzz` | Put `Rx` minus `2` in `Rz`.    |
-| `Rz := Rx + 4`              | `1001100xxx---zzz` | Put `Rx` plus `4` in `Rz`.     |
-| `Rz := Rx - 4`              | `1001101xxx---zzz` | Put `Rx` minus `4` in `Rz`.    |
-| `Rz := Rx + Ry + FC`        | `1001110xxx---zzz` | Put `Rx` plus `Ry` in `Rz`.    |
-| `Rz := Rx - Ry - FC`        | `1001111xxx---zzz` | Put `Rx` minus `Ry` in `Rz`.   |
-|                           | | |
-| **Boolean Operations**      | `1010------------` | Return a boolean value.        |
-| `Rz := FALSE`               | `1010000------zzz` | Put `0` in `Rz`.               |
-| `Rz := Rx << Ry`            | `1010001xxxyyyzzz` | `Rx` is less than `Ry`.        |
-| `Rz := Rx == Ry`            | `1010010xxxyyyzzz` | `Rx` is equal to `Ry`.         |
-| `Rz := Rx <= Ry`            | `1010011xxxyyyzzz` | `Rx` is not greater than `Ry`. |
-| `Rz := Rx >> Ry`            | `1010100xxxyyyzzz` | `Rx` is greater than `Ry`.     |
-| `Rz := Rx <> Ry`            | `1010101xxxyyyzzz` | `Rx` is not equal to `Ry`.     |
-| `Rz := Rx >= Ry`            | `1010110xxxyyyzzz` | `Rx` is not less than `Ry`.    |
-| `Rz := TRUE`                | `1010111------zzz` | Put `-1` in `Rz`.              |
-|                        | | |
-| **Logic Operations**        | `1011------------` | Perform bit-wise logic.        |
-| `Rz := Rx AND Ry`           | `1011000xxxyyyzzz` | Perform a bit-wise AND.        |
-| `Rz := NOT (Rx AND Ry)`     | `1011001xxxyyyzzz` | Perform a bit-wise NAND.       |
-| `Rz := Rx SAN Ry`           | `1011010xxxyyyzzz` | Perform a bit-wise SAN.        |
-| `Rz := NOT (Rx SAN Ry)`     | `1011011xxxyyyzzz` | Perform a bit-wise NSAN.       |
-| `Rz := Rx IOR Ry`           | `1011100xxxyyyzzz` | Perform a bit-wise IOR.        |
-| `Rz := NOT (Rx IOR Ry)`     | `1011101xxxyyyzzz` | Perform a bit-wise NIOR.       |
-| `Rz := Rx XOR Ry`           | `1011110xxxyyyzzz` | Perform a bit-wise XOR.        |
-| `Rz := NOT (Rx XOR Ry)`     | `1011111xxxyyyzzz` | Perform a bit-wise NXOR.       |
-|                       | | |
-| **Memory Operations**       | `11--------------` | Access memory.                 |
-| `Rz <- INPUT`               | `1100001------zzz` | Read `Rz` from input.          |
-| `Ry -> OUTPUT`              | `1101010---yyy---` | Write `Ry` to output.          |
-| `Rz <- constant`            | `1110001------zzz` | Load `Rz` with constant.       |
-| `Rz <- @(Rx)`               | `1110101xxx---zzz` | Load `Rz` from memory address. |
-| `Ry -> @(Rx)`               | `1111110xxxyyy---` | Store `Ry` in memory address.  |
-| `RESET`                     | `1111111111111111` | Reset CPU, I/O and memory.     |
+#### Status Flag Instructions
+The status flag instructions allow a program to modify the state of the user
+status flags: `F1` - `F7` and the carry flag `FC` which is used for both
+arithmetic operations and bit shifting operations.
+
+#### Arithmetic/Logic Instructions
+The arithmetic and logic instructions utilize the ALU to perform operations that
+may involve the values in registers and stores the result of each operation in a
+register.
+
+#### Memory Access Instructions
+The memory access instructions are used to read data from, and write data to,
+specific memory locations.  They are also used to read in a web request and
+write out the generated response.
 
 ### Getting Started
+For detailed information on this module click
+[here](https://github.com/craterdog/go-simple-processor/wiki).
+
 To include the Go packages for this module use the following import statement:
 ```go
 import (
