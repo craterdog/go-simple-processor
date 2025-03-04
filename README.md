@@ -9,11 +9,17 @@ external source and resulting in one response back to the external source.
 
 ![Processor Flow](https://raw.githubusercontent.com/wiki/craterdog/go-simple-processor/docs/images/Processor%20Flow.jpg)
 
-It also provides a Go based simulator for the processor.
+It is ideal for the latest cloud-based web-service architectures like AWS Lambda
+Functions or Azure Functions that execute a function for each web request that is
+received.  These architectures don't require the overhead of an operating system
+running on a traditional microprocessor.
+
+This project also provides a Go based simulator for the simple processor.
 
 ### Architecture
 This simple processor architecture is made up of two major components—the
-Central Processing Unit (CPU) and the Memory Unit.
+Central Processing Unit (CPU) and the Memory Unit, both using 16 bit words and
+memory addressing.
 
 ![Architecture Model](https://raw.githubusercontent.com/wiki/craterdog/go-simple-processor/docs/images/Processor%20Architecture.jpg)
 
