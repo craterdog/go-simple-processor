@@ -1,4 +1,4 @@
-<img src="https://craterdog.com/images/CraterDog.png" width="50%">
+[<img src="https://craterdog.com/images/CraterDog.png" width="30%">](https://craterdog.com)
 
 ## Go Simple Processor
 
